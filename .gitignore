@@ -1,0 +1,158 @@
+# ==========================================
+# Laravel / PHP
+# ==========================================
+
+/.phpunit.cache
+/vendor
+/node_modules
+
+# Laravel generated files
+/public/build
+/public/hot
+/public/storage
+
+# Laravel storage keys
+/storage/*.key
+
+# Laravel logs
+/storage/logs/*
+!/storage/logs/.gitignore
+
+# Laravel framework cache
+/bootstrap/cache/*
+!/bootstrap/cache/.gitignore
+
+
+# ==========================================
+# Environment & Secrets
+# ==========================================
+
+.env
+.env.backup
+.env.production
+.env.local
+.env.development
+.env.testing
+
+# Local configuration
+auth.json
+
+
+# ==========================================
+# PHPUnit / Testing
+# ==========================================
+
+.phpunit.result.cache
+.phpunit.cache
+
+
+# ==========================================
+# Composer
+# ==========================================
+
+/vendor
+composer.phar
+
+
+# ==========================================
+# NPM / Yarn
+# ==========================================
+
+/node_modules
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+pnpm-debug.log
+
+
+# ==========================================
+# Laravel Homestead
+# ==========================================
+
+Homestead.json
+Homestead.yaml
+
+
+# ==========================================
+# IDE / Editors
+# ==========================================
+
+/.idea
+/.fleet
+/.vscode
+/.vs
+
+# Visual Studio Code
+*.code-workspace
+
+# JetBrains
+*.iml
+
+# Visual Studio
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+
+# ==========================================
+# Operating System
+# ==========================================
+
+.DS_Store
+Thumbs.db
+desktop.ini
+
+
+# ==========================================
+# Logs & Temporary Files
+# ==========================================
+
+*.log
+*.tmp
+*.temp
+*.bak
+
+
+# ==========================================
+# Coverage / Test Reports
+# ==========================================
+
+/coverage
+/.coverage
+*.coverage
+*.coveragexml
+TestResults/
+
+
+# ==========================================
+# Database Files
+# ==========================================
+
+*.sqlite
+*.sqlite3
+*.db
+*.db-shm
+*.db-wal
+
+
+# ==========================================
+# PHPStorm / Laravel IDE
+# ==========================================
+
+.phpstorm.meta.php
+
+
+# ==========================================
+# Generated / Runtime Files
+# ==========================================
+
+/storage/framework/cache/*
+/storage/framework/sessions/*
+/storage/framework/testing/*
+/storage/framework/views/*
+
+!/storage/framework/cache/.gitignore
+!/storage/framework/sessions/.gitignore
+!/storage/framework/testing/.gitignore
+!/storage/framework/views/.gitignore
