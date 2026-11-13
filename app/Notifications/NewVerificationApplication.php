@@ -11,9 +11,7 @@ class NewVerificationApplication extends Notification
 {
     use Queueable;
 
-    public function __construct(public readonly User $applicant)
-    {
-    }
+    public function __construct(public readonly User $applicant) {}
 
     /**
      * Deliver via in-app (database) and email channels so the admin both
@@ -31,15 +29,15 @@ class NewVerificationApplication extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            'type'         => 'verification_application',
-            'user_id'      => $this->applicant->id,
+            'type' => 'verification_application',
+            'user_id' => $this->applicant->id,
             'applicant_id' => $this->applicant->id,
-            'name'         => $this->applicant->full_name ?? $this->applicant->name,
-            'email'        => $this->applicant->email,
-            'nid_number'   => $this->applicant->nid_number,
+            'name' => $this->applicant->full_name ?? $this->applicant->name,
+            'email' => $this->applicant->email,
+            'nid_number' => $this->applicant->nid_number,
             'requested_at' => optional($this->applicant->verification_requested_at)->toIso8601String(),
-            'message'      => 'A new citizen verification application is awaiting review.',
-            'review_url'   => route('admin.verification.show', $this->applicant, false),
+            'message' => 'A new citizen verification application is awaiting review.',
+            'review_url' => route('admin.verification.show', $this->applicant, false),
         ];
     }
 
@@ -48,8 +46,8 @@ class NewVerificationApplication extends Notification
         return (new MailMessage)
             ->subject('New Verification Application Submitted')
             ->line('A new citizen verification application has been submitted.')
-            ->line('Applicant: ' . ($this->applicant->full_name ?? $this->applicant->name))
-            ->line('NID: ' . ($this->applicant->nid_number ?? 'N/A'))
+            ->line('Applicant: '.($this->applicant->full_name ?? $this->applicant->name))
+            ->line('NID: '.($this->applicant->nid_number ?? 'N/A'))
             ->action('Review Application', route('admin.verification.show', $this->applicant))
             ->line('Please review it at your earliest convenience.');
     }

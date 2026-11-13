@@ -9,9 +9,7 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class AdminRevenueController extends Controller
 {
-    public function __construct(private readonly RevenueDashboardService $revenue)
-    {
-    }
+    public function __construct(private readonly RevenueDashboardService $revenue) {}
 
     public function index(Request $request)
     {
@@ -51,7 +49,7 @@ class AdminRevenueController extends Controller
     public function export(Request $request): StreamedResponse
     {
         $filters = $request->only(['status', 'fiscal_year', 'city', 'q']);
-        $filename = 'tax-reconciliation-' . now()->format('Ymd_His') . '.csv';
+        $filename = 'tax-reconciliation-'.now()->format('Ymd_His').'.csv';
         $query = $this->filteredAssessmentsQuery($filters);
 
         return response()->streamDownload(function () use ($query) {
@@ -88,7 +86,7 @@ class AdminRevenueController extends Controller
     public function exportValuations(Request $request): StreamedResponse
     {
         $withinDays = (int) $request->integer('within_days', config('tax.valuation_upcoming_threshold_days', 60));
-        $filename = 'upcoming-valuations-' . now()->format('Ymd_His') . '.csv';
+        $filename = 'upcoming-valuations-'.now()->format('Ymd_His').'.csv';
         $rows = $this->revenue->getUpcomingValuations($withinDays, null);
 
         return response()->streamDownload(function () use ($rows) {
@@ -116,17 +114,17 @@ class AdminRevenueController extends Controller
     {
         return TaxAssessment::with(['owner', 'property'])
             ->withSum('payments as payments_sum_amount', 'amount')
-            ->when(!empty($filters['status']), fn ($query) => $query->where('status', $filters['status']))
-            ->when(!empty($filters['fiscal_year']), fn ($query) => $query->where('fiscal_year', $filters['fiscal_year']))
-            ->when(!empty($filters['city']), fn ($query) => $query->whereHas('property', fn ($q) => $q->where('city', 'like', '%' . $filters['city'] . '%')))
-            ->when(!empty($filters['q']), function ($query) use ($filters) {
+            ->when(! empty($filters['status']), fn ($query) => $query->where('status', $filters['status']))
+            ->when(! empty($filters['fiscal_year']), fn ($query) => $query->where('fiscal_year', $filters['fiscal_year']))
+            ->when(! empty($filters['city']), fn ($query) => $query->whereHas('property', fn ($q) => $q->where('city', 'like', '%'.$filters['city'].'%')))
+            ->when(! empty($filters['q']), function ($query) use ($filters) {
                 $query->where(function ($sub) use ($filters) {
                     $sub->whereHas('property', function ($propertyQuery) use ($filters) {
-                        $propertyQuery->where('title', 'like', '%' . $filters['q'] . '%')
-                            ->orWhere('city', 'like', '%' . $filters['q'] . '%');
+                        $propertyQuery->where('title', 'like', '%'.$filters['q'].'%')
+                            ->orWhere('city', 'like', '%'.$filters['q'].'%');
                     })->orWhereHas('owner', function ($ownerQuery) use ($filters) {
-                        $ownerQuery->where('name', 'like', '%' . $filters['q'] . '%')
-                            ->orWhere('full_name', 'like', '%' . $filters['q'] . '%');
+                        $ownerQuery->where('name', 'like', '%'.$filters['q'].'%')
+                            ->orWhere('full_name', 'like', '%'.$filters['q'].'%');
                     });
                 });
             })

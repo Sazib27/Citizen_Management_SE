@@ -1,0 +1,264 @@
+total entries: 245
+
+[2026-11-11 19:07:12] [2026-11-11 19:07:12] testing.ERROR: Vite manifest not found at: D:\Citizen_Management-main\Citizen_Management-main\public\build/manifest.json {"view":{"view":"D:\\Citizen_Management-main\\Citizen_Management-main\\resources\\views\\layouts\\admin.blade.php","d
+      EXC: [object] (Spatie\\LaravelIgnition\\Exceptions\\ViewException(code: 0): Vite manifest not found at: D:\\Citizen_Management-main\\Citizen_Management-main\\public\\build/manifest.json at D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Vite.
+      #0 D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Vite.php(384): Illuminate\\Foundation\\Vite->manifest()
+
+[2026-11-11 19:07:13] [2026-11-11 19:07:13] testing.ERROR: Vite manifest not found at: D:\Citizen_Management-main\Citizen_Management-main\public\build/manifest.json {"view":{"view":"D:\\Citizen_Management-main\\Citizen_Management-main\\resources\\views\\layouts\\admin.blade.php","d
+      EXC: [object] (Spatie\\LaravelIgnition\\Exceptions\\ViewException(code: 0): Vite manifest not found at: D:\\Citizen_Management-main\\Citizen_Management-main\\public\\build/manifest.json at D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Vite.
+      #0 D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Vite.php(384): Illuminate\\Foundation\\Vite->manifest()
+
+[2026-11-11 19:07:16] [2026-11-11 19:07:16] testing.ERROR: Vite manifest not found at: D:\Citizen_Management-main\Citizen_Management-main\public\build/manifest.json {"view":{"view":"D:\\Citizen_Management-main\\Citizen_Management-main\\resources\\views\\layouts\\app.blade.php","dat
+      EXC: [object] (Spatie\\LaravelIgnition\\Exceptions\\ViewException(code: 0): Vite manifest not found at: D:\\Citizen_Management-main\\Citizen_Management-main\\public\\build/manifest.json at D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Vite.
+      #0 D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Vite.php(384): Illuminate\\Foundation\\Vite->manifest()
+
+[2026-11-11 19:07:17] [2026-11-11 19:07:17] testing.ERROR: Vite manifest not found at: D:\Citizen_Management-main\Citizen_Management-main\public\build/manifest.json {"view":{"view":"D:\\Citizen_Management-main\\Citizen_Management-main\\resources\\views\\layouts\\app.blade.php","dat
+      EXC: [object] (Spatie\\LaravelIgnition\\Exceptions\\ViewException(code: 0): Vite manifest not found at: D:\\Citizen_Management-main\\Citizen_Management-main\\public\\build/manifest.json at D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Vite.
+      #0 D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Vite.php(384): Illuminate\\Foundation\\Vite->manifest()
+
+[2026-11-11 19:07:17] [2026-11-11 19:07:17] testing.ERROR: Vite manifest not found at: D:\Citizen_Management-main\Citizen_Management-main\public\build/manifest.json {"view":{"view":"D:\\Citizen_Management-main\\Citizen_Management-main\\resources\\views\\layouts\\app.blade.php","dat
+      EXC: [object] (Spatie\\LaravelIgnition\\Exceptions\\ViewException(code: 0): Vite manifest not found at: D:\\Citizen_Management-main\\Citizen_Management-main\\public\\build/manifest.json at D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Vite.
+      #0 D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Vite.php(384): Illuminate\\Foundation\\Vite->manifest()
+
+[2026-11-11 19:07:18] [2026-11-11 19:07:18] testing.WARNING: QR generation service unreachable. {"error":"cURL error 60: SSL certificate problem: unable to get local issuer certificate (see https://curl.haxx.se/libcurl/c/libcurl-errors.html) for https://api.qrserver.com/v1/create-q
+
+[2026-11-11 19:07:20] [2026-11-11 19:07:20] testing.ERROR: Curl error: SSL handshake failed {"userId":1,"exception":"[object] (RuntimeException(code: 0): Curl error: SSL handshake failed at D:\\Citizen_Management-main\\Citizen_Management-main\\tests\\Feature\\CitizenSSLCommerzPayme
+      EXC: [object] (RuntimeException(code: 0): Curl error: SSL handshake failed at D:\\Citizen_Management-main\\Citizen_Management-main\\tests\\Feature\\CitizenSSLCommerzPaymentTest.php:91)
+[stacktrace]
+#0 D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\phpunit\\phpunit\\src\\Framework\\TestCase
+      #0 D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\phpunit\\phpunit\\src\\Framework\\TestCase.php(1548): Tests\\Feature\\CitizenSSLCommerzPaymentTest->test_service_failure_is_surfaced_as_user_facing_error()
+
+[2026-11-11 19:07:20] [2026-11-11 19:07:20] testing.WARNING: SSLCZ IPN could not resolve assessment. {"tran_id":"TAX-999-1-DEAD","payload_keys":["status","tran_id","value_a"]} 
+
+[2026-11-11 19:07:20] [2026-11-11 19:07:20] testing.INFO: SSLCZ IPN ignored: non-success status. {"status":"FAILED","tran_id":"TAX-1-1-BEEF"} 
+
+[2026-11-11 19:07:21] [2026-11-11 19:07:21] testing.ERROR: Vite manifest not found at: D:\Citizen_Management-main\Citizen_Management-main\public\build/manifest.json {"view":{"view":"D:\\Citizen_Management-main\\Citizen_Management-main\\resources\\views\\layouts\\citizen.blade.php",
+      EXC: [object] (Spatie\\LaravelIgnition\\Exceptions\\ViewException(code: 0): Vite manifest not found at: D:\\Citizen_Management-main\\Citizen_Management-main\\public\\build/manifest.json at D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Vite.
+      #0 D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Vite.php(384): Illuminate\\Foundation\\Vite->manifest()
+
+[2026-11-11 19:07:21] [2026-11-11 19:07:21] testing.ERROR: Vite manifest not found at: D:\Citizen_Management-main\Citizen_Management-main\public\build/manifest.json {"view":{"view":"D:\\Citizen_Management-main\\Citizen_Management-main\\resources\\views\\layouts\\citizen.blade.php",
+      EXC: [object] (Spatie\\LaravelIgnition\\Exceptions\\ViewException(code: 0): Vite manifest not found at: D:\\Citizen_Management-main\\Citizen_Management-main\\public\\build/manifest.json at D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Vite.
+      #0 D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Vite.php(384): Illuminate\\Foundation\\Vite->manifest()
+
+[2026-11-11 19:07:22] [2026-11-11 19:07:22] testing.ERROR: Vite manifest not found at: D:\Citizen_Management-main\Citizen_Management-main\public\build/manifest.json {"view":{"view":"D:\\Citizen_Management-main\\Citizen_Management-main\\resources\\views\\layouts\\citizen.blade.php",
+      EXC: [object] (Spatie\\LaravelIgnition\\Exceptions\\ViewException(code: 0): Vite manifest not found at: D:\\Citizen_Management-main\\Citizen_Management-main\\public\\build/manifest.json at D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Vite.
+      #0 D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Vite.php(384): Illuminate\\Foundation\\Vite->manifest()
+
+[2026-11-11 19:07:23] [2026-11-11 19:07:23] testing.ERROR: Vite manifest not found at: D:\Citizen_Management-main\Citizen_Management-main\public\build/manifest.json {"view":{"view":"D:\\Citizen_Management-main\\Citizen_Management-main\\resources\\views\\layouts\\citizen.blade.php",
+      EXC: [object] (Spatie\\LaravelIgnition\\Exceptions\\ViewException(code: 0): Vite manifest not found at: D:\\Citizen_Management-main\\Citizen_Management-main\\public\\build/manifest.json at D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Vite.
+      #0 D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Vite.php(384): Illuminate\\Foundation\\Vite->manifest()
+
+[2026-11-11 19:07:23] [2026-11-11 19:07:23] testing.ERROR: Vite manifest not found at: D:\Citizen_Management-main\Citizen_Management-main\public\build/manifest.json {"view":{"view":"D:\\Citizen_Management-main\\Citizen_Management-main\\resources\\views\\layouts\\citizen.blade.php",
+      EXC: [object] (Spatie\\LaravelIgnition\\Exceptions\\ViewException(code: 0): Vite manifest not found at: D:\\Citizen_Management-main\\Citizen_Management-main\\public\\build/manifest.json at D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Vite.
+      #0 D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Vite.php(384): Illuminate\\Foundation\\Vite->manifest()
+
+[2026-11-11 19:07:24] [2026-11-11 19:07:24] testing.ERROR: Vite manifest not found at: D:\Citizen_Management-main\Citizen_Management-main\public\build/manifest.json {"view":{"view":"D:\\Citizen_Management-main\\Citizen_Management-main\\resources\\views\\layouts\\citizen.blade.php",
+      EXC: [object] (Spatie\\LaravelIgnition\\Exceptions\\ViewException(code: 0): Vite manifest not found at: D:\\Citizen_Management-main\\Citizen_Management-main\\public\\build/manifest.json at D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Vite.
+      #0 D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Vite.php(384): Illuminate\\Foundation\\Vite->manifest()
+
+[2026-11-11 19:07:24] [2026-11-11 19:07:24] testing.ERROR: Vite manifest not found at: D:\Citizen_Management-main\Citizen_Management-main\public\build/manifest.json {"view":{"view":"D:\\Citizen_Management-main\\Citizen_Management-main\\resources\\views\\layouts\\citizen.blade.php",
+      EXC: [object] (Spatie\\LaravelIgnition\\Exceptions\\ViewException(code: 0): Vite manifest not found at: D:\\Citizen_Management-main\\Citizen_Management-main\\public\\build/manifest.json at D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Vite.
+      #0 D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Vite.php(384): Illuminate\\Foundation\\Vite->manifest()
+
+[2026-11-11 19:07:25] [2026-11-11 19:07:25] testing.ERROR: Vite manifest not found at: D:\Citizen_Management-main\Citizen_Management-main\public\build/manifest.json {"view":{"view":"D:\\Citizen_Management-main\\Citizen_Management-main\\resources\\views\\layouts\\admin.blade.php","d
+      EXC: [object] (Spatie\\LaravelIgnition\\Exceptions\\ViewException(code: 0): Vite manifest not found at: D:\\Citizen_Management-main\\Citizen_Management-main\\public\\build/manifest.json at D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Vite.
+      #0 D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Vite.php(384): Illuminate\\Foundation\\Vite->manifest()
+
+[2026-11-11 19:07:25] [2026-11-11 19:07:25] testing.ERROR: Vite manifest not found at: D:\Citizen_Management-main\Citizen_Management-main\public\build/manifest.json {"view":{"view":"D:\\Citizen_Management-main\\Citizen_Management-main\\resources\\views\\layouts\\citizen.blade.php",
+      EXC: [object] (Spatie\\LaravelIgnition\\Exceptions\\ViewException(code: 0): Vite manifest not found at: D:\\Citizen_Management-main\\Citizen_Management-main\\public\\build/manifest.json at D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Vite.
+      #0 D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Vite.php(384): Illuminate\\Foundation\\Vite->manifest()
+
+[2026-11-11 19:07:27] [2026-11-11 19:07:27] testing.WARNING: SSLCZ IPN rejected by gateway validation. {"assessment":1,"tran_id":"TAX-1-1-ABCD","reason":"amount mismatch: expected 1500.00, gateway reported 100.00"} 
+
+[2026-11-11 19:07:27] [2026-11-11 19:07:27] testing.WARNING: SSLCZ IPN rejected by gateway validation. {"assessment":1,"tran_id":"TAX-1-1-ABCD","reason":"currency mismatch: expected BDT, got USD"} 
+
+[2026-11-11 19:07:27] [2026-11-11 19:07:27] testing.WARNING: SSLCZ IPN rejected by gateway validation. {"assessment":1,"tran_id":"TAX-1-1-ABCD","reason":"gateway status is FAILED"} 
+
+[2026-11-11 19:07:27] [2026-11-11 19:07:27] testing.WARNING: SSLCZ IPN rejected: invalid shared secret. {"ip":"127.0.0.1"} 
+
+[2026-11-11 19:07:38] [2026-11-11 19:07:38] testing.ERROR: Vite manifest not found at: D:\Citizen_Management-main\Citizen_Management-main\public\build/manifest.json {"view":{"view":"D:\\Citizen_Management-main\\Citizen_Management-main\\resources\\views\\layouts\\admin.blade.php","d
+      EXC: [object] (Spatie\\LaravelIgnition\\Exceptions\\ViewException(code: 0): Vite manifest not found at: D:\\Citizen_Management-main\\Citizen_Management-main\\public\\build/manifest.json at D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Vite.
+      #0 D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Vite.php(384): Illuminate\\Foundation\\Vite->manifest()
+
+[2026-11-11 19:07:39] [2026-11-11 19:07:39] testing.ERROR: Vite manifest not found at: D:\Citizen_Management-main\Citizen_Management-main\public\build/manifest.json {"view":{"view":"D:\\Citizen_Management-main\\Citizen_Management-main\\resources\\views\\layouts\\admin.blade.php","d
+      EXC: [object] (Spatie\\LaravelIgnition\\Exceptions\\ViewException(code: 0): Vite manifest not found at: D:\\Citizen_Management-main\\Citizen_Management-main\\public\\build/manifest.json at D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Vite.
+      #0 D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Vite.php(384): Illuminate\\Foundation\\Vite->manifest()
+
+[2026-11-11 19:07:42] [2026-11-11 19:07:42] testing.ERROR: Vite manifest not found at: D:\Citizen_Management-main\Citizen_Management-main\public\build/manifest.json {"view":{"view":"D:\\Citizen_Management-main\\Citizen_Management-main\\resources\\views\\layouts\\app.blade.php","dat
+      EXC: [object] (Spatie\\LaravelIgnition\\Exceptions\\ViewException(code: 0): Vite manifest not found at: D:\\Citizen_Management-main\\Citizen_Management-main\\public\\build/manifest.json at D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Vite.
+      #0 D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Vite.php(384): Illuminate\\Foundation\\Vite->manifest()
+
+[2026-11-11 19:07:42] [2026-11-11 19:07:42] testing.ERROR: Vite manifest not found at: D:\Citizen_Management-main\Citizen_Management-main\public\build/manifest.json {"view":{"view":"D:\\Citizen_Management-main\\Citizen_Management-main\\resources\\views\\layouts\\app.blade.php","dat
+      EXC: [object] (Spatie\\LaravelIgnition\\Exceptions\\ViewException(code: 0): Vite manifest not found at: D:\\Citizen_Management-main\\Citizen_Management-main\\public\\build/manifest.json at D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Vite.
+      #0 D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Vite.php(384): Illuminate\\Foundation\\Vite->manifest()
+
+[2026-11-11 19:07:42] [2026-11-11 19:07:42] testing.ERROR: Vite manifest not found at: D:\Citizen_Management-main\Citizen_Management-main\public\build/manifest.json {"view":{"view":"D:\\Citizen_Management-main\\Citizen_Management-main\\resources\\views\\layouts\\app.blade.php","dat
+      EXC: [object] (Spatie\\LaravelIgnition\\Exceptions\\ViewException(code: 0): Vite manifest not found at: D:\\Citizen_Management-main\\Citizen_Management-main\\public\\build/manifest.json at D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Vite.
+      #0 D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Vite.php(384): Illuminate\\Foundation\\Vite->manifest()
+
+[2026-11-11 19:07:43] [2026-11-11 19:07:43] testing.WARNING: QR generation service unreachable. {"error":"cURL error 60: SSL certificate problem: unable to get local issuer certificate (see https://curl.haxx.se/libcurl/c/libcurl-errors.html) for https://api.qrserver.com/v1/create-q
+
+[2026-11-11 19:07:44] [2026-11-11 19:07:44] testing.ERROR: Curl error: SSL handshake failed {"userId":1,"exception":"[object] (RuntimeException(code: 0): Curl error: SSL handshake failed at D:\\Citizen_Management-main\\Citizen_Management-main\\tests\\Feature\\CitizenSSLCommerzPayme
+      EXC: [object] (RuntimeException(code: 0): Curl error: SSL handshake failed at D:\\Citizen_Management-main\\Citizen_Management-main\\tests\\Feature\\CitizenSSLCommerzPaymentTest.php:91)
+[stacktrace]
+#0 D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\phpunit\\phpunit\\src\\Framework\\TestCase
+      #0 D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\phpunit\\phpunit\\src\\Framework\\TestCase.php(1548): Tests\\Feature\\CitizenSSLCommerzPaymentTest->test_service_failure_is_surfaced_as_user_facing_error()
+
+[2026-11-11 19:07:44] [2026-11-11 19:07:44] testing.WARNING: SSLCZ IPN could not resolve assessment. {"tran_id":"TAX-999-1-DEAD","payload_keys":["status","tran_id","value_a"]} 
+
+[2026-11-11 19:07:44] [2026-11-11 19:07:44] testing.INFO: SSLCZ IPN ignored: non-success status. {"status":"FAILED","tran_id":"TAX-1-1-BEEF"} 
+
+[2026-11-11 19:07:45] [2026-11-11 19:07:45] testing.ERROR: Vite manifest not found at: D:\Citizen_Management-main\Citizen_Management-main\public\build/manifest.json {"view":{"view":"D:\\Citizen_Management-main\\Citizen_Management-main\\resources\\views\\layouts\\citizen.blade.php",
+      EXC: [object] (Spatie\\LaravelIgnition\\Exceptions\\ViewException(code: 0): Vite manifest not found at: D:\\Citizen_Management-main\\Citizen_Management-main\\public\\build/manifest.json at D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Vite.
+      #0 D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Vite.php(384): Illuminate\\Foundation\\Vite->manifest()
+
+[2026-11-11 19:07:45] [2026-11-11 19:07:45] testing.ERROR: Vite manifest not found at: D:\Citizen_Management-main\Citizen_Management-main\public\build/manifest.json {"view":{"view":"D:\\Citizen_Management-main\\Citizen_Management-main\\resources\\views\\layouts\\citizen.blade.php",
+      EXC: [object] (Spatie\\LaravelIgnition\\Exceptions\\ViewException(code: 0): Vite manifest not found at: D:\\Citizen_Management-main\\Citizen_Management-main\\public\\build/manifest.json at D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Vite.
+      #0 D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Vite.php(384): Illuminate\\Foundation\\Vite->manifest()
+
+[2026-11-11 19:07:46] [2026-11-11 19:07:46] testing.ERROR: Vite manifest not found at: D:\Citizen_Management-main\Citizen_Management-main\public\build/manifest.json {"view":{"view":"D:\\Citizen_Management-main\\Citizen_Management-main\\resources\\views\\layouts\\citizen.blade.php",
+      EXC: [object] (Spatie\\LaravelIgnition\\Exceptions\\ViewException(code: 0): Vite manifest not found at: D:\\Citizen_Management-main\\Citizen_Management-main\\public\\build/manifest.json at D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Vite.
+      #0 D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Vite.php(384): Illuminate\\Foundation\\Vite->manifest()
+
+[2026-11-11 19:07:47] [2026-11-11 19:07:47] testing.ERROR: Vite manifest not found at: D:\Citizen_Management-main\Citizen_Management-main\public\build/manifest.json {"view":{"view":"D:\\Citizen_Management-main\\Citizen_Management-main\\resources\\views\\layouts\\citizen.blade.php",
+      EXC: [object] (Spatie\\LaravelIgnition\\Exceptions\\ViewException(code: 0): Vite manifest not found at: D:\\Citizen_Management-main\\Citizen_Management-main\\public\\build/manifest.json at D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Vite.
+      #0 D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Vite.php(384): Illuminate\\Foundation\\Vite->manifest()
+
+[2026-11-11 19:07:47] [2026-11-11 19:07:47] testing.ERROR: Vite manifest not found at: D:\Citizen_Management-main\Citizen_Management-main\public\build/manifest.json {"view":{"view":"D:\\Citizen_Management-main\\Citizen_Management-main\\resources\\views\\layouts\\citizen.blade.php",
+      EXC: [object] (Spatie\\LaravelIgnition\\Exceptions\\ViewException(code: 0): Vite manifest not found at: D:\\Citizen_Management-main\\Citizen_Management-main\\public\\build/manifest.json at D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Vite.
+      #0 D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Vite.php(384): Illuminate\\Foundation\\Vite->manifest()
+
+[2026-11-11 19:07:48] [2026-11-11 19:07:48] testing.ERROR: Vite manifest not found at: D:\Citizen_Management-main\Citizen_Management-main\public\build/manifest.json {"view":{"view":"D:\\Citizen_Management-main\\Citizen_Management-main\\resources\\views\\layouts\\citizen.blade.php",
+      EXC: [object] (Spatie\\LaravelIgnition\\Exceptions\\ViewException(code: 0): Vite manifest not found at: D:\\Citizen_Management-main\\Citizen_Management-main\\public\\build/manifest.json at D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Vite.
+      #0 D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Vite.php(384): Illuminate\\Foundation\\Vite->manifest()
+
+[2026-11-11 19:07:48] [2026-11-11 19:07:48] testing.ERROR: Vite manifest not found at: D:\Citizen_Management-main\Citizen_Management-main\public\build/manifest.json {"view":{"view":"D:\\Citizen_Management-main\\Citizen_Management-main\\resources\\views\\layouts\\citizen.blade.php",
+      EXC: [object] (Spatie\\LaravelIgnition\\Exceptions\\ViewException(code: 0): Vite manifest not found at: D:\\Citizen_Management-main\\Citizen_Management-main\\public\\build/manifest.json at D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Vite.
+      #0 D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Vite.php(384): Illuminate\\Foundation\\Vite->manifest()
+
+[2026-11-11 19:07:49] [2026-11-11 19:07:49] testing.ERROR: Vite manifest not found at: D:\Citizen_Management-main\Citizen_Management-main\public\build/manifest.json {"view":{"view":"D:\\Citizen_Management-main\\Citizen_Management-main\\resources\\views\\layouts\\admin.blade.php","d
+      EXC: [object] (Spatie\\LaravelIgnition\\Exceptions\\ViewException(code: 0): Vite manifest not found at: D:\\Citizen_Management-main\\Citizen_Management-main\\public\\build/manifest.json at D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Vite.
+      #0 D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Vite.php(384): Illuminate\\Foundation\\Vite->manifest()
+
+[2026-11-11 19:07:49] [2026-11-11 19:07:49] testing.ERROR: Vite manifest not found at: D:\Citizen_Management-main\Citizen_Management-main\public\build/manifest.json {"view":{"view":"D:\\Citizen_Management-main\\Citizen_Management-main\\resources\\views\\layouts\\citizen.blade.php",
+      EXC: [object] (Spatie\\LaravelIgnition\\Exceptions\\ViewException(code: 0): Vite manifest not found at: D:\\Citizen_Management-main\\Citizen_Management-main\\public\\build/manifest.json at D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Vite.
+      #0 D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Vite.php(384): Illuminate\\Foundation\\Vite->manifest()
+
+[2026-11-11 19:07:50] [2026-11-11 19:07:50] testing.WARNING: SSLCZ IPN rejected by gateway validation. {"assessment":1,"tran_id":"TAX-1-1-ABCD","reason":"amount mismatch: expected 1500.00, gateway reported 100.00"} 
+
+[2026-11-11 19:07:50] [2026-11-11 19:07:50] testing.WARNING: SSLCZ IPN rejected by gateway validation. {"assessment":1,"tran_id":"TAX-1-1-ABCD","reason":"currency mismatch: expected BDT, got USD"} 
+
+[2026-11-11 19:07:50] [2026-11-11 19:07:50] testing.WARNING: SSLCZ IPN rejected by gateway validation. {"assessment":1,"tran_id":"TAX-1-1-ABCD","reason":"gateway status is FAILED"} 
+
+[2026-11-11 19:07:51] [2026-11-11 19:07:51] testing.WARNING: SSLCZ IPN rejected: invalid shared secret. {"ip":"127.0.0.1"} 
+
+[2026-11-11 19:07:54] [2026-11-11 19:07:54] testing.ERROR: Vite manifest not found at: D:\Citizen_Management-main\Citizen_Management-main\public\build/manifest.json {"view":{"view":"D:\\Citizen_Management-main\\Citizen_Management-main\\resources\\views\\layouts\\citizen.blade.php",
+      EXC: [object] (Spatie\\LaravelIgnition\\Exceptions\\ViewException(code: 0): Vite manifest not found at: D:\\Citizen_Management-main\\Citizen_Management-main\\public\\build/manifest.json at D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Vite.
+      #0 D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Vite.php(384): Illuminate\\Foundation\\Vite->manifest()
+
+[2026-11-11 19:08:07] [2026-11-11 19:08:07] testing.ERROR: Vite manifest not found at: D:\Citizen_Management-main\Citizen_Management-main\public\build/manifest.json {"view":{"view":"D:\\Citizen_Management-main\\Citizen_Management-main\\resources\\views\\layouts\\citizen.blade.php",
+      EXC: [object] (Spatie\\LaravelIgnition\\Exceptions\\ViewException(code: 0): Vite manifest not found at: D:\\Citizen_Management-main\\Citizen_Management-main\\public\\build/manifest.json at D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Vite.
+      #0 D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Vite.php(384): Illuminate\\Foundation\\Vite->manifest()
+
+[2026-11-11 19:08:07] [2026-11-11 19:08:07] testing.ERROR: Vite manifest not found at: D:\Citizen_Management-main\Citizen_Management-main\public\build/manifest.json {"view":{"view":"D:\\Citizen_Management-main\\Citizen_Management-main\\resources\\views\\layouts\\citizen.blade.php",
+      EXC: [object] (Spatie\\LaravelIgnition\\Exceptions\\ViewException(code: 0): Vite manifest not found at: D:\\Citizen_Management-main\\Citizen_Management-main\\public\\build/manifest.json at D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Vite.
+      #0 D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Vite.php(384): Illuminate\\Foundation\\Vite->manifest()
+
+[2026-11-11 19:08:08] [2026-11-11 19:08:08] testing.ERROR: Vite manifest not found at: D:\Citizen_Management-main\Citizen_Management-main\public\build/manifest.json {"view":{"view":"D:\\Citizen_Management-main\\Citizen_Management-main\\resources\\views\\layouts\\citizen.blade.php",
+      EXC: [object] (Spatie\\LaravelIgnition\\Exceptions\\ViewException(code: 0): Vite manifest not found at: D:\\Citizen_Management-main\\Citizen_Management-main\\public\\build/manifest.json at D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Vite.
+      #0 D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Vite.php(384): Illuminate\\Foundation\\Vite->manifest()
+
+[2026-11-11 19:09:31] [2026-11-11 19:09:31] testing.WARNING: QR generation service unreachable. {"error":"cURL error 60: SSL certificate problem: unable to get local issuer certificate (see https://curl.haxx.se/libcurl/c/libcurl-errors.html) for https://api.qrserver.com/v1/create-q
+
+[2026-11-11 19:09:31] [2026-11-11 19:09:31] testing.ERROR: Curl error: SSL handshake failed {"userId":1,"exception":"[object] (RuntimeException(code: 0): Curl error: SSL handshake failed at D:\\Citizen_Management-main\\Citizen_Management-main\\tests\\Feature\\CitizenSSLCommerzPayme
+      EXC: [object] (RuntimeException(code: 0): Curl error: SSL handshake failed at D:\\Citizen_Management-main\\Citizen_Management-main\\tests\\Feature\\CitizenSSLCommerzPaymentTest.php:91)
+[stacktrace]
+#0 D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\phpunit\\phpunit\\src\\Framework\\TestCase
+      #0 D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\phpunit\\phpunit\\src\\Framework\\TestCase.php(1548): Tests\\Feature\\CitizenSSLCommerzPaymentTest->test_service_failure_is_surfaced_as_user_facing_error()
+
+[2026-11-11 19:09:31] [2026-11-11 19:09:31] testing.WARNING: SSLCZ IPN could not resolve assessment. {"tran_id":"TAX-999-1-DEAD","payload_keys":["status","tran_id","value_a"]} 
+
+[2026-11-11 19:09:31] [2026-11-11 19:09:31] testing.INFO: SSLCZ IPN ignored: non-success status. {"status":"FAILED","tran_id":"TAX-1-1-BEEF"} 
+
+[2026-11-11 19:09:34] [2026-11-11 19:09:34] testing.WARNING: SSLCZ IPN rejected by gateway validation. {"assessment":1,"tran_id":"TAX-1-1-ABCD","reason":"amount mismatch: expected 1500.00, gateway reported 100.00"} 
+
+[2026-11-11 19:09:34] [2026-11-11 19:09:34] testing.WARNING: SSLCZ IPN rejected by gateway validation. {"assessment":1,"tran_id":"TAX-1-1-ABCD","reason":"currency mismatch: expected BDT, got USD"} 
+
+[2026-11-11 19:09:34] [2026-11-11 19:09:34] testing.WARNING: SSLCZ IPN rejected by gateway validation. {"assessment":1,"tran_id":"TAX-1-1-ABCD","reason":"gateway status is FAILED"} 
+
+[2026-11-11 19:09:34] [2026-11-11 19:09:34] testing.WARNING: SSLCZ IPN rejected: invalid shared secret. {"ip":"127.0.0.1"} 
+
+[2026-11-11 19:12:30] [2026-11-11 19:12:30] testing.WARNING: QR generation service unreachable. {"error":"cURL error 60: SSL certificate problem: unable to get local issuer certificate (see https://curl.haxx.se/libcurl/c/libcurl-errors.html) for https://api.qrserver.com/v1/create-q
+
+[2026-11-11 19:12:31] [2026-11-11 19:12:31] testing.ERROR: Curl error: SSL handshake failed {"userId":1,"exception":"[object] (RuntimeException(code: 0): Curl error: SSL handshake failed at D:\\Citizen_Management-main\\Citizen_Management-main\\tests\\Feature\\CitizenSSLCommerzPayme
+      EXC: [object] (RuntimeException(code: 0): Curl error: SSL handshake failed at D:\\Citizen_Management-main\\Citizen_Management-main\\tests\\Feature\\CitizenSSLCommerzPaymentTest.php:91)
+[stacktrace]
+#0 D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\phpunit\\phpunit\\src\\Framework\\TestCase
+      #0 D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\phpunit\\phpunit\\src\\Framework\\TestCase.php(1548): Tests\\Feature\\CitizenSSLCommerzPaymentTest->test_service_failure_is_surfaced_as_user_facing_error()
+
+[2026-11-11 19:12:31] [2026-11-11 19:12:31] testing.WARNING: SSLCZ IPN could not resolve assessment. {"tran_id":"TAX-999-1-DEAD","payload_keys":["status","tran_id","value_a"]} 
+
+[2026-11-11 19:12:31] [2026-11-11 19:12:31] testing.INFO: SSLCZ IPN ignored: non-success status. {"status":"FAILED","tran_id":"TAX-1-1-BEEF"} 
+
+[2026-11-11 19:12:35] [2026-11-11 19:12:35] testing.WARNING: SSLCZ IPN rejected by gateway validation. {"assessment":1,"tran_id":"TAX-1-1-ABCD","reason":"amount mismatch: expected 1500.00, gateway reported 100.00"} 
+
+[2026-11-11 19:12:35] [2026-11-11 19:12:35] testing.WARNING: SSLCZ IPN rejected by gateway validation. {"assessment":1,"tran_id":"TAX-1-1-ABCD","reason":"currency mismatch: expected BDT, got USD"} 
+
+[2026-11-11 19:12:35] [2026-11-11 19:12:35] testing.WARNING: SSLCZ IPN rejected by gateway validation. {"assessment":1,"tran_id":"TAX-1-1-ABCD","reason":"gateway status is FAILED"} 
+
+[2026-11-11 19:12:35] [2026-11-11 19:12:35] testing.WARNING: SSLCZ IPN rejected: invalid shared secret. {"ip":"127.0.0.1"} 
+
+[2026-11-11 19:15:24] [2026-11-11 19:15:24] testing.WARNING: QR generation service unreachable. {"error":"cURL error 60: SSL certificate problem: unable to get local issuer certificate (see https://curl.haxx.se/libcurl/c/libcurl-errors.html) for https://api.qrserver.com/v1/create-q
+
+[2026-11-11 19:15:26] [2026-11-11 19:15:26] testing.ERROR: Curl error: SSL handshake failed {"userId":1,"exception":"[object] (RuntimeException(code: 0): Curl error: SSL handshake failed at D:\\Citizen_Management-main\\Citizen_Management-main\\tests\\Feature\\CitizenSSLCommerzPayme
+      EXC: [object] (RuntimeException(code: 0): Curl error: SSL handshake failed at D:\\Citizen_Management-main\\Citizen_Management-main\\tests\\Feature\\CitizenSSLCommerzPaymentTest.php:91)
+[stacktrace]
+#0 D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\phpunit\\phpunit\\src\\Framework\\TestCase
+      #0 D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\phpunit\\phpunit\\src\\Framework\\TestCase.php(1548): Tests\\Feature\\CitizenSSLCommerzPaymentTest->test_service_failure_is_surfaced_as_user_facing_error()
+
+[2026-11-11 19:15:26] [2026-11-11 19:15:26] testing.WARNING: SSLCZ IPN could not resolve assessment. {"tran_id":"TAX-999-1-DEAD","payload_keys":["status","tran_id","value_a"]} 
+
+[2026-11-11 19:15:26] [2026-11-11 19:15:26] testing.INFO: SSLCZ IPN ignored: non-success status. {"status":"FAILED","tran_id":"TAX-1-1-BEEF"} 
+
+[2026-11-11 19:15:30] [2026-11-11 19:15:30] testing.WARNING: SSLCZ IPN rejected by gateway validation. {"assessment":1,"tran_id":"TAX-1-1-ABCD","reason":"amount mismatch: expected 1500.00, gateway reported 100.00"} 
+
+[2026-11-11 19:15:30] [2026-11-11 19:15:30] testing.WARNING: SSLCZ IPN rejected by gateway validation. {"assessment":1,"tran_id":"TAX-1-1-ABCD","reason":"currency mismatch: expected BDT, got USD"} 
+
+[2026-11-11 19:15:30] [2026-11-11 19:15:30] testing.WARNING: SSLCZ IPN rejected by gateway validation. {"assessment":1,"tran_id":"TAX-1-1-ABCD","reason":"gateway status is FAILED"} 
+
+[2026-11-11 19:15:30] [2026-11-11 19:15:30] testing.WARNING: SSLCZ IPN rejected: invalid shared secret. {"ip":"127.0.0.1"} 
+
+[2026-11-11 19:15:37] [2026-11-11 19:15:37] testing.WARNING: QR generation service unreachable. {"error":"cURL error 60: SSL certificate problem: unable to get local issuer certificate (see https://curl.haxx.se/libcurl/c/libcurl-errors.html) for https://api.qrserver.com/v1/create-q
+
+[2026-11-11 19:15:38] [2026-11-11 19:15:38] testing.ERROR: Curl error: SSL handshake failed {"userId":1,"exception":"[object] (RuntimeException(code: 0): Curl error: SSL handshake failed at D:\\Citizen_Management-main\\Citizen_Management-main\\tests\\Feature\\CitizenSSLCommerzPayme
+      EXC: [object] (RuntimeException(code: 0): Curl error: SSL handshake failed at D:\\Citizen_Management-main\\Citizen_Management-main\\tests\\Feature\\CitizenSSLCommerzPaymentTest.php:91)
+[stacktrace]
+#0 D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\phpunit\\phpunit\\src\\Framework\\TestCase
+      #0 D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\phpunit\\phpunit\\src\\Framework\\TestCase.php(1548): Tests\\Feature\\CitizenSSLCommerzPaymentTest->test_service_failure_is_surfaced_as_user_facing_error()
+
+[2026-11-11 19:15:39] [2026-11-11 19:15:39] testing.WARNING: SSLCZ IPN could not resolve assessment. {"tran_id":"TAX-999-1-DEAD","payload_keys":["status","tran_id","value_a"]} 
+
+[2026-11-11 19:15:39] [2026-11-11 19:15:39] testing.INFO: SSLCZ IPN ignored: non-success status. {"status":"FAILED","tran_id":"TAX-1-1-BEEF"} 
+
+[2026-11-11 19:15:43] [2026-11-11 19:15:43] testing.WARNING: SSLCZ IPN rejected by gateway validation. {"assessment":1,"tran_id":"TAX-1-1-ABCD","reason":"amount mismatch: expected 1500.00, gateway reported 100.00"} 
+
+[2026-11-11 19:15:43] [2026-11-11 19:15:43] testing.WARNING: SSLCZ IPN rejected by gateway validation. {"assessment":1,"tran_id":"TAX-1-1-ABCD","reason":"currency mismatch: expected BDT, got USD"} 
+
+[2026-11-11 19:15:43] [2026-11-11 19:15:43] testing.WARNING: SSLCZ IPN rejected by gateway validation. {"assessment":1,"tran_id":"TAX-1-1-ABCD","reason":"gateway status is FAILED"} 
+
+[2026-11-11 19:15:43] [2026-11-11 19:15:43] testing.WARNING: SSLCZ IPN rejected: invalid shared secret. {"ip":"127.0.0.1"} 
+
+[2026-11-11 19:30:01] [2026-11-11 19:30:01] local.ERROR: could not find driver (Connection: mysql, SQL: select exists (select 1 from information_schema.tables where table_schema = 'laravel' and table_name = 'migrations' and table_type in ('BASE TABLE', 'SYSTEM VERSIONED')) as `exis
+      EXC: [object] (Illuminate\\Database\\QueryException(code: 0): could not find driver (Connection: mysql, SQL: select exists (select 1 from information_schema.tables where table_schema = 'laravel' and table_name = 'migrations' and table_type in ('BASE TABLE', 'SYSTEM VERSIONED')) as `exists`) at D:\\Citize
+      #0 D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Connection.php(779): Illuminate\\Database\\Connection->runQueryCallback()
+
+[2026-11-11 19:30:50] [2026-11-11 19:30:50] local.ERROR: could not find driver (Connection: mysql, SQL: select exists (select 1 from information_schema.tables where table_schema = 'laravel' and table_name = 'migrations' and table_type in ('BASE TABLE', 'SYSTEM VERSIONED')) as `exis
+      EXC: [object] (Illuminate\\Database\\QueryException(code: 0): could not find driver (Connection: mysql, SQL: select exists (select 1 from information_schema.tables where table_schema = 'laravel' and table_name = 'migrations' and table_type in ('BASE TABLE', 'SYSTEM VERSIONED')) as `exists`) at D:\\Citize
+      #0 D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Connection.php(779): Illuminate\\Database\\Connection->runQueryCallback()
+
+[2026-11-11 20:24:57] [2026-11-11 20:24:57] local.ERROR: SQLSTATE[HY000]: General error: 1364 Field 'tax_rate' doesn't have a default value (Connection: mysql, SQL: insert into `tax_assessments` (`property_id`, `owner_id`, `fiscal_year`, `tax_amount`, `assessed_value_snapshot`, `du
+      EXC: [object] (Illuminate\\Database\\QueryException(code: HY000): SQLSTATE[HY000]: General error: 1364 Field 'tax_rate' doesn't have a default value (Connection: mysql, SQL: insert into `tax_assessments` (`property_id`, `owner_id`, `fiscal_year`, `tax_amount`, `assessed_value_snapshot`, `due_date`, `stat
+      #0 D:\\Citizen_Management-main\\Citizen_Management-main\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Connection.php(779): Illuminate\\Database\\Connection->runQueryCallback('insert into `ta...', Array, Object(Closure))
+
+[2026-11-11 20:26:07] [2026-11-11 20:26:07] local.INFO: SSLCZ IPN ignored: non-success status. {"status":"","tran_id":""} 
+

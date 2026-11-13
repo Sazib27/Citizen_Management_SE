@@ -42,9 +42,9 @@
 
     <div class="bg-white shadow rounded-lg p-6 space-y-4">
         <h3 class="text-lg font-semibold text-gray-900">Complete payment</h3>
-        <p class="text-sm text-gray-600">You will be redirected to Stripe Checkout. Once the payment succeeds, you will return to the dashboard with a receipt.</p>
+        <p class="text-sm text-gray-600">You will be redirected to the SSL Commerz hosted checkout. Once the payment succeeds, you will return to the dashboard with a receipt.</p>
 
-        @if(!$stripeEnabled)
+        @if(!$sslczEnabled)
             <div class="bg-yellow-50 border-l-4 border-yellow-500 text-yellow-800 p-4 rounded">
                 Online payments are currently unavailable. Please try again later or visit the ward office to make a manual payment.
             </div>
@@ -52,7 +52,7 @@
             <form method="POST" action="{{ route('citizen.taxes.pay', $assessment) }}" class="space-y-3">
                 @csrf
                 <button class="w-full md:w-auto bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-3 rounded-lg">
-                    Proceed to Stripe Checkout
+                    Proceed to SSL Commerz
                 </button>
             </form>
         @endif

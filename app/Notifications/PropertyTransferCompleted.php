@@ -12,9 +12,7 @@ class PropertyTransferCompleted extends Notification
 {
     use Queueable;
 
-    public function __construct(private readonly Property $property, private readonly ?User $previousOwner = null)
-    {
-    }
+    public function __construct(private readonly Property $property, private readonly ?User $previousOwner = null) {}
 
     public function via(object $notifiable): array
     {
@@ -25,13 +23,13 @@ class PropertyTransferCompleted extends Notification
     {
         $message = (new MailMessage)
             ->subject('Property Transfer Completed')
-            ->line('The transfer for ' . $this->property->title . ' has been completed.')
-            ->line('New owner: ' . ($this->property->owner?->display_name ?? 'Unassigned'))
-            ->line('Property address: ' . $this->property->address_line . ', ' . $this->property->city)
+            ->line('The transfer for '.$this->property->title.' has been completed.')
+            ->line('New owner: '.($this->property->owner?->display_name ?? 'Unassigned'))
+            ->line('Property address: '.$this->property->address_line.', '.$this->property->city)
             ->line('Thank you for keeping the property registry up to date.');
 
         if ($this->previousOwner) {
-            $message->line('Previous owner: ' . $this->previousOwner->display_name);
+            $message->line('Previous owner: '.$this->previousOwner->display_name);
         }
 
         return $message;

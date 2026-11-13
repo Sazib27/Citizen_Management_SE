@@ -186,7 +186,7 @@ class RevenueDashboardService
 
         $average = $payments->avg(function (TaxPayment $payment) {
             $issuedAt = $payment->assessment?->issued_at;
-            if (!$issuedAt) {
+            if (! $issuedAt) {
                 return null;
             }
 

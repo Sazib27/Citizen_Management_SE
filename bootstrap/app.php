@@ -15,6 +15,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'admin' => \App\Http\Middleware\AdminMiddleware::class,
             'citizen' => \App\Http\Middleware\CitizenMiddleware::class,
             'verified.citizen' => \App\Http\Middleware\EnsureCitizenVerified::class,
+            'verified.email' => \App\Http\Middleware\EnsureEmailIsVerified::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

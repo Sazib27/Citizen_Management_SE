@@ -19,9 +19,14 @@
                 <div class="px-6 py-5 space-y-4">
                     <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-2">
                         <div>
-                            <p class="font-semibold text-gray-900">{{ $request->property->title }}</p>
+                            <p class="font-semibold text-gray-900">{{ $request->property->title ?? 'Property removed' }}</p>
                             <p class="text-sm text-gray-500">Requester: {{ $request->user->display_name }} · {{ $request->created_at->diffForHumans() }}</p>
-                            <p class="text-sm text-gray-500">Owner: {{ $request->property->owner->display_name }} ({{ $request->property->owner->email }})</p>
+                            <p class="text-sm text-gray-500">
+                                Owner: {{ optional($request->property?->owner)->display_name ?? 'Unassigned' }}
+                                @if($request->property?->owner)
+                                    ({{ $request->property->owner->email }})
+                                @endif
+                            </p>
                             <p class="text-sm text-gray-600">{{ $request->message ?? 'No tenant message provided.' }}</p>
                         </div>
                         <span class="inline-flex items-center px-3 py-1 text-xs font-semibold rounded-full {{ $request->ready_for_admin ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' }}">
@@ -81,6 +86,14 @@
                         </div>
                     </div>
 
+                    @unless($request->ready_for_admin)
+                        <div class="bg-amber-50 border border-amber-200 text-amber-900 rounded-lg p-4 text-sm">
+                            The owner has not confirmed the terms for this request yet.
+                            You can still approve it using the tenant's proposed terms below,
+                            but the owner may not have agreed to them.
+                        </div>
+                    @endunless
+
                     <form method="POST" action="{{ route('admin.rental-requests.handle', $request) }}" class="grid gap-3 md:grid-cols-6">
                         @csrf
                         <input type="date" name="start_date" class="border rounded p-2" value="{{ optional($request->owner_start_date ?? $request->tenant_start_date)->format('Y-m-d') }}" placeholder="Start date">
@@ -90,7 +103,7 @@
                         <input type="text" name="decision_note" placeholder="Decision note" class="border rounded p-2 md:col-span-2">
                         <textarea name="terms_text" rows="2" class="border rounded p-2 md:col-span-4" placeholder="Custom terms (optional)"></textarea>
                         <div class="flex gap-2 md:col-span-2">
-                            <button name="action" value="approve" class="px-4 py-2 bg-green-600 text-white rounded {{ $request->ready_for_admin ? '' : 'opacity-50 cursor-not-allowed' }}" {{ $request->ready_for_admin ? '' : 'disabled' }}>Approve</button>
+                            <button name="action" value="approve" class="px-4 py-2 bg-green-600 text-white rounded">Approve</button>
                             <button name="action" value="reject" class="px-4 py-2 bg-red-600 text-white rounded">Reject</button>
                         </div>
                     </form>

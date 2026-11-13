@@ -11,7 +11,7 @@ class TaxAssessmentService
 {
     public function generate(Property $property, string $fiscalYear, ?float $assessedValue = null): TaxAssessment
     {
-        if (!$property->owner_id) {
+        if (! $property->owner_id) {
             throw new InvalidArgumentException('Property requires an owner before generating assessments.');
         }
 

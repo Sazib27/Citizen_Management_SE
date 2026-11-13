@@ -12,12 +12,8 @@
                 <p class="text-2xl font-bold text-gray-900">{{ $complaint->subject }}</p>
                 <p class="text-sm text-gray-500">Filed by {{ $complaint->user->display_name }} ({{ $complaint->user->email }})</p>
             </div>
-            <span class="px-3 py-1 rounded-full text-sm font-semibold @class([
-                'bg-yellow-100 text-yellow-800' => $complaint->status === 'open',
-                'bg-blue-100 text-blue-800' => $complaint->status === 'in_progress',
-                'bg-green-100 text-green-800' => $complaint->status === 'resolved',
-            ])">
-                {{ str_replace('_', ' ', ucfirst($complaint->status)) }}
+            <span class="px-3 py-1 rounded-full text-sm font-semibold {{ $complaint->status->badgeClasses() }}">
+                {{ $complaint->status->label() }}
             </span>
         </div>
 
@@ -68,6 +64,34 @@
         </div>
     </div>
 
+    {{-- Status timeline --}}
+    <div class="bg-white shadow rounded-lg p-6">
+        <h2 class="text-lg font-semibold text-gray-900 mb-4">Status Timeline</h2>
+        <ol class="space-y-4 border-l border-gray-200 ml-2">
+            @forelse($complaint->updates as $update)
+                <li class="ml-4">
+                    <div class="flex items-center gap-2">
+                        <span class="px-2 py-1 rounded-full text-xs font-semibold {{ \App\Enums\ComplaintStatus::from($update->to_status->value)->badgeClasses() }}">
+                            {{ \App\Enums\ComplaintStatus::from($update->to_status->value)->label() }}
+                        </span>
+                        <span class="text-xs text-gray-500">{{ $update->created_at->format('M d, Y h:i A') }}</span>
+                    </div>
+                    @if($update->from_status)
+                        <p class="text-xs text-gray-500 mt-1">Changed from {{ \App\Enums\ComplaintStatus::from($update->from_status->value)->label() }}</p>
+                    @endif
+                    @if($update->note)
+                        <p class="text-sm text-gray-700 mt-1">{{ $update->note }}</p>
+                    @endif
+                    @if($update->author)
+                        <p class="text-xs text-gray-400 mt-1">by {{ $update->author->display_name }}</p>
+                    @endif
+                </li>
+            @empty
+                <li class="ml-4 text-sm text-gray-500">No timeline entries yet.</li>
+            @endforelse
+        </ol>
+    </div>
+
     <div class="bg-white shadow rounded-lg p-6">
         <form method="POST" action="{{ route('admin.complaints.update', $complaint) }}" class="space-y-4">
             @csrf
@@ -76,15 +100,23 @@
             <div>
                 <label class="block text-sm font-medium text-gray-700">Status</label>
                 <select name="status" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                    <option value="open" @selected($complaint->status === 'open')>Open</option>
-                    <option value="in_progress" @selected($complaint->status === 'in_progress')>In progress</option>
-                    <option value="resolved" @selected($complaint->status === 'resolved')>Resolved</option>
+                    @foreach(\App\Enums\ComplaintStatus::cases() as $case)
+                        <option value="{{ $case->value }}" @selected($complaint->status === $case)>{{ $case->label() }}</option>
+                    @endforeach
                 </select>
+                @error('status') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Timeline note</label>
+                <input type="text" name="note" value="{{ old('note') }}" maxlength="500" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" placeholder="Optional note shown to the citizen on the timeline">
             </div>
 
             <div>
                 <label class="block text-sm font-medium text-gray-700">Admin response</label>
                 <textarea name="admin_reply" rows="4" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" placeholder="Provide guidance or resolution details">{{ old('admin_reply', $complaint->admin_reply) }}</textarea>
+                <p class="mt-1 text-xs text-gray-500">A reason is required when rejecting a complaint.</p>
+                @error('admin_reply') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
             </div>
 
             <div class="flex justify-end space-x-3">

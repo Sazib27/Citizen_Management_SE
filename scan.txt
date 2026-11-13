@@ -1,0 +1,95 @@
+
+================ CITIZEN ================
+login => HTTP 302
+  -> http://127.0.0.1:8000/citizen/dashboard
+  [ ok] //                                      token=v9m0i2SNTk session=v9m0i2SNTk
+  [302] /login                                  skipped
+  [ ok] /register                               token=v9m0i2SNTk session=v9m0i2SNTk
+  [ ok] /email/verify                           token=v9m0i2SNTk session=v9m0i2SNTk
+  [ ok] /email/verify                           token=v9m0i2SNTk session=v9m0i2SNTk
+  [ ok] /email/verify                           token=v9m0i2SNTk session=v9m0i2SNTk
+  [302] /forgot-password                        skipped
+  [302] /admin/dashboard                        skipped
+  [ ok] /citizen/dashboard                      token=v9m0i2SNTk session=v9m0i2SNTk
+  [ ok] /citizen/profile                        token=v9m0i2SNTk session=v9m0i2SNTk
+  [ ok] /citizen/profile/edit                   token=v9m0i2SNTk session=v9m0i2SNTk
+  [ ok] /citizen/profile/edit                   token=v9m0i2SNTk session=v9m0i2SNTk
+  [500] /citizen/verification/certificate       skipped
+  [ ok] /citizen/properties                     token=v9m0i2SNTk session=v9m0i2SNTk
+  [ ok] /citizen/properties/request/add         token=v9m0i2SNTk session=v9m0i2SNTk
+  [ ok] /citizen/properties/request/add         token=v9m0i2SNTk session=v9m0i2SNTk
+  [ ok] /citizen/rent-agreements                token=v9m0i2SNTk session=v9m0i2SNTk
+  [302] /citizen/rent-agreements-lookup         skipped
+  [ ok] /citizen/taxes                          token=v9m0i2SNTk session=v9m0i2SNTk
+  [302] /citizen/taxes/payment/success          skipped
+  [302] /citizen/taxes/payment/fail             skipped
+  [302] /citizen/taxes/payment/cancel           skipped
+  [302] /citizen/taxes/payment/demo             skipped
+  [ ok] /citizen/complaints                     token=v9m0i2SNTk session=v9m0i2SNTk
+  [ ok] /citizen/complaints/create              token=v9m0i2SNTk session=v9m0i2SNTk
+  [ ok] /citizen/complaints/create              token=v9m0i2SNTk session=v9m0i2SNTk
+  [302] /verification/apply                     skipped
+  [302] /admin/verification                     skipped
+  [302] /admin/properties                       skipped
+  [302] /admin/properties/create                skipped
+  [302] /admin/properties/requests              skipped
+  [302] /admin/rental-requests                  skipped
+  [302] /admin/rent-agreements                  skipped
+  [302] /admin/taxes                            skipped
+  [302] /admin/taxes/create                     skipped
+  [302] /admin/revenue                          skipped
+  [302] /admin/revenue/export                   skipped
+  [302] /admin/revenue/export-valuations        skipped
+  [302] /admin/complaints                       skipped
+
+  >>> mismatches: 0
+
+================ ADMIN ================
+login => HTTP 302
+  -> http://127.0.0.1:8000/admin/dashboard
+  [ ok] //                                      token=fq5Plpww8h session=fq5Plpww8h
+  [302] /login                                  skipped
+  [ ok] /register                               token=fq5Plpww8h session=fq5Plpww8h
+  [ ok] /email/verify                           token=fq5Plpww8h session=fq5Plpww8h
+  [ ok] /email/verify                           token=fq5Plpww8h session=fq5Plpww8h
+  [ ok] /email/verify                           token=fq5Plpww8h session=fq5Plpww8h
+  [302] /forgot-password                        skipped
+  [ ok] /admin/dashboard                        token=fq5Plpww8h session=fq5Plpww8h
+  [302] /citizen/dashboard                      skipped
+  [302] /citizen/profile                        skipped
+  [302] /citizen/profile/edit                   skipped
+  [302] /citizen/verification/certificate       skipped
+  [302] /citizen/properties                     skipped
+  [302] /citizen/properties/request/add         skipped
+  [302] /citizen/rent-agreements                skipped
+  [302] /citizen/rent-agreements-lookup         skipped
+  [302] /citizen/taxes                          skipped
+  [302] /citizen/taxes/payment/success          skipped
+  [302] /citizen/taxes/payment/fail             skipped
+  [302] /citizen/taxes/payment/cancel           skipped
+  [302] /citizen/taxes/payment/demo             skipped
+  [302] /citizen/complaints                     skipped
+  [302] /citizen/complaints/create              skipped
+  [302] /verification/apply                     skipped
+  [ ok] /admin/verification                     token=fq5Plpww8h session=fq5Plpww8h
+  [ ok] /admin/properties                       token=fq5Plpww8h session=fq5Plpww8h
+  [ ok] /admin/properties                       token=fq5Plpww8h session=fq5Plpww8h
+  [ ok] /admin/properties                       token=fq5Plpww8h session=fq5Plpww8h
+  [ ok] /admin/properties                       token=fq5Plpww8h session=fq5Plpww8h
+  [ ok] /admin/properties                       token=fq5Plpww8h session=fq5Plpww8h
+  [ ok] /admin/properties                       token=fq5Plpww8h session=fq5Plpww8h
+  [ ok] /admin/properties                       token=fq5Plpww8h session=fq5Plpww8h
+  [ ok] /admin/properties/create                token=fq5Plpww8h session=fq5Plpww8h
+  [ ok] /admin/properties/create                token=fq5Plpww8h session=fq5Plpww8h
+  [ ok] /admin/properties/requests              token=fq5Plpww8h session=fq5Plpww8h
+  [ ok] /admin/properties/requests              token=fq5Plpww8h session=fq5Plpww8h
+  [ ok] /admin/properties/requests              token=fq5Plpww8h session=fq5Plpww8h
+  [ ok] /admin/rental-requests                  token=fq5Plpww8h session=fq5Plpww8h
+  [ ok] /admin/rent-agreements                  token=fq5Plpww8h session=fq5Plpww8h
+  [ ok] /admin/taxes                            token=fq5Plpww8h session=fq5Plpww8h
+  [ ok] /admin/taxes/create                     token=fq5Plpww8h session=fq5Plpww8h
+  [ ok] /admin/taxes/create                     token=fq5Plpww8h session=fq5Plpww8h
+  [ ok] /admin/revenue                          token=fq5Plpww8h session=fq5Plpww8h
+  [ ok] /admin/complaints                       token=fq5Plpww8h session=fq5Plpww8h
+
+  >>> mismatches: 0

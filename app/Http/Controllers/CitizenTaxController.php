@@ -29,7 +29,7 @@ class CitizenTaxController extends Controller
             ->get();
 
         $outstandingTotal = $outstandingAssessments->sum('tax_amount');
-        $nextDueDate = $outstandingAssessments->filter(fn($item) => $item->due_date)->min('due_date');
+        $nextDueDate = $outstandingAssessments->filter(fn ($item) => $item->due_date)->min('due_date');
 
         $recentPayments = TaxPayment::with(['assessment.property'])
             ->where('payer_id', $userId)
@@ -42,7 +42,7 @@ class CitizenTaxController extends Controller
             'outstandingTotal' => $outstandingTotal,
             'nextDueDate' => $nextDueDate,
             'statusFilter' => $statusFilter,
-            'stripeEnabled' => filled(config('services.stripe.key')) && filled(config('services.stripe.secret')),
+            'sslczEnabled' => $this->sslczEnabled(),
             'recentPayments' => $recentPayments,
         ]);
     }
@@ -51,18 +51,44 @@ class CitizenTaxController extends Controller
     {
         $this->authorizeAssessment($taxAssessment);
 
-        if (!in_array($taxAssessment->status, ['issued', 'overdue'])) {
+        if (! in_array($taxAssessment->status, ['issued', 'overdue'])) {
             return redirect()->route('citizen.taxes.index')->withErrors([
                 'payment' => 'Only issued or overdue assessments can be paid online.',
             ]);
         }
 
-        $stripeEnabled = filled(config('services.stripe.key')) && filled(config('services.stripe.secret'));
-
         return view('citizen.taxes.pay', [
             'assessment' => $taxAssessment->loadMissing('property'),
-            'stripeEnabled' => $stripeEnabled,
+            'sslczEnabled' => $this->sslczEnabled(),
         ]);
+    }
+
+    /**
+     * SSL Commerz is enabled when:
+     *   - demo mode is on (any environment), OR
+     *   - real credentials are configured and not running against
+     *     the sandbox host in production.
+     */
+    private function sslczEnabled(): bool
+    {
+        $cfg = config('services.sslcommerz', []);
+
+        // Demo mode is always considered "enabled" — it works without
+        // external credentials and is safe to keep on in any env.
+        if ($cfg['demo_mode'] ?? false) {
+            return true;
+        }
+
+        if (empty($cfg['store_id']) || empty($cfg['store_passwd'])) {
+            return false;
+        }
+
+        if (! app()->environment('local') && ($cfg['sandbox'] ?? true)) {
+            // Production must not run against the sandbox host.
+            return false;
+        }
+
+        return true;
     }
 
     public function receipt(TaxPayment $taxPayment)

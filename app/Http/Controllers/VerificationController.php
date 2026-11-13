@@ -2,6 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Certificate;
+use App\Models\FakeNid;
+use App\Models\User;
+use App\Notifications\NewVerificationApplication;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -10,17 +15,13 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
-use App\Models\User;
-use App\Models\FakeNid;
-use App\Notifications\NewVerificationApplication;
-use Barryvdh\DomPDF\Facade\Pdf;
 
 class VerificationController extends Controller
 {
     public function __construct()
     {
-    $this->middleware('auth')->except(['publicStatus']);
-        $this->middleware('citizen')->except(['adminIndex', 'show', 'approve', 'reject', 'document', 'publicStatus']);
+        $this->middleware('auth')->except(['publicStatus', 'verifyCertificate']);
+        $this->middleware('citizen')->except(['adminIndex', 'show', 'approve', 'reject', 'document', 'publicStatus', 'verifyCertificate']);
         $this->middleware('admin')->only(['adminIndex', 'show', 'approve', 'reject', 'document']);
     }
 
@@ -47,17 +48,48 @@ class VerificationController extends Controller
         $user = Auth::user();
 
         $validated = $request->validate([
-            'name'              => 'required|string|max:255',
-            'full_name'         => 'nullable|string|max:255',
-            'email'             => 'required|email|max:255|unique:users,email,' . $user->id,
-            'phone_number'      => 'nullable|string|regex:/^[0-9]{11}$/',
+            'name' => 'required|string|max:255',
+            'full_name' => 'nullable|string|max:255',
+            'email' => 'required|email|max:255|unique:users,email,'.$user->id,
+            'phone_number' => 'nullable|string|regex:/^[0-9]{11}$/',
             'permanent_address' => 'nullable|string|max:500',
-            'present_address'   => 'nullable|string|max:500',
+            'present_address' => 'nullable|string|max:500',
         ], [
             'phone_number.regex' => 'The phone number must be exactly 11 digits.',
         ]);
 
-        $user->update($validated);
+        /*
+         * Changing the email address invalidates the previous email
+         * verification. Without resetting `email_verified_at` a citizen
+         * could point the account at an address they do not control and
+         * still be treated as email-verified — and password-reset links
+         * would then be delivered to that address.
+         */
+        $emailChanged = strcasecmp((string) $user->email, (string) $validated['email']) !== 0;
+
+        /*
+         * `full_name` is the field cross-checked against the NID registry
+         * and printed on the verification certificate, so it must not be
+         * editable once the citizen has been verified — otherwise the
+         * certificate would no longer match the issued identity.
+         */
+        if ($user->isVerified() && array_key_exists('full_name', $validated)) {
+            unset($validated['full_name']);
+        }
+
+        $user->fill($validated);
+
+        if ($emailChanged) {
+            $user->email_verified_at = null;
+        }
+
+        $user->save();
+
+        if ($emailChanged) {
+            return redirect()
+                ->route('citizen.profile')
+                ->with('warning', 'Your email address was changed. Please verify the new address to keep full access to citizen services.');
+        }
 
         return redirect()
             ->route('citizen.profile')
@@ -102,13 +134,13 @@ class VerificationController extends Controller
             'nid_number' => 'required|string|regex:/^[0-9]+$/',
         ], [
             'nid_number.required' => 'This NID number is not found in our database.',
-            'nid_number.regex'    => 'This NID number is not found in our database.',
+            'nid_number.regex' => 'This NID number is not found in our database.',
         ]);
 
         $validator->after(function ($v) use ($request) {
             $nid = $request->input('nid_number');
-            if (!is_string($nid) || !preg_match('/^[0-9]{10}$/', $nid)) {
-                if (!$v->errors()->has('nid_number')) {
+            if (! is_string($nid) || ! preg_match('/^[0-9]{10}$/', $nid)) {
+                if (! $v->errors()->has('nid_number')) {
                     $v->errors()->add(
                         'nid_number',
                         'This NID number is not found in our database.'
@@ -125,7 +157,7 @@ class VerificationController extends Controller
 
         $nidRecord = FakeNid::where('nid', $validated['nid_number'])->first();
 
-        if (!$nidRecord) {
+        if (! $nidRecord) {
             return back()->withErrors(['nid_number' => 'This NID number is not found in our database.'])->withInput();
         }
 
@@ -147,11 +179,11 @@ class VerificationController extends Controller
             'present_address' => $nidRecord->present_address,
         ];
 
-    session()->flash('prefillData', $prefillData);
+        session()->flash('prefillData', $prefillData);
 
-    $inputPrefill = array_filter($prefillData, fn ($value) => !is_null($value));
+        $inputPrefill = array_filter($prefillData, fn ($value) => ! is_null($value));
 
-    return back()->withInput(array_merge($request->all(), $inputPrefill))->with('success', 'NID data loaded from registry.');
+        return back()->withInput(array_merge($request->all(), $inputPrefill))->with('success', 'NID data loaded from registry.');
     }
 
     /**
@@ -186,20 +218,20 @@ class VerificationController extends Controller
          * the user-facing flow: don't block citizens on registry state).
          */
         $validator = \Validator::make($request->all(), [
-            'nid_number'        => 'required|string|regex:/^[0-9]{10}$/',
-            'full_name'         => 'required|string|max:255',
-            'date_of_birth'     => 'required|date|before:today',
-            'father_name'       => 'required|string|max:255',
-            'mother_name'       => 'required|string|max:255',
+            'nid_number' => 'required|string|regex:/^[0-9]{10}$/',
+            'full_name' => 'required|string|max:255',
+            'date_of_birth' => 'required|date|before:today',
+            'father_name' => 'required|string|max:255',
+            'mother_name' => 'required|string|max:255',
             'permanent_address' => 'required|string|max:500',
-            'present_address'   => 'required|string|max:500',
-            'phone_number'      => 'required|string|regex:/^[0-9]{11}$/',
-            'email'             => 'required|email|max:255',
-            'nid_front_image'   => 'required|image|mimes:jpeg,png,jpg|max:2048',
-            'nid_back_image'    => 'required|image|mimes:jpeg,png,jpg|max:2048',
-            'passport_photo'    => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'present_address' => 'required|string|max:500',
+            'phone_number' => 'required|string|regex:/^[0-9]{11}$/',
+            'email' => 'required|email|max:255',
+            'nid_front_image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'nid_back_image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'passport_photo' => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ], [
-            'nid_number.regex'   => 'The NID number must be exactly 10 digits.',
+            'nid_number.regex' => 'The NID number must be exactly 10 digits.',
             'phone_number.regex' => 'The phone number must be exactly 11 digits.',
         ]);
 
@@ -258,30 +290,30 @@ class VerificationController extends Controller
 
         try {
             DB::transaction(function () use ($request, $user, $validated, &$writtenPaths) {
-                $writtenPaths['nid_front']   = $request->file('nid_front_image')->store('verification/nid_front', 'public');
-                $writtenPaths['nid_back']    = $request->file('nid_back_image')->store('verification/nid_back', 'public');
-                $writtenPaths['passport']    = $request->file('passport_photo')->store('verification/passport_photos', 'public');
+                $writtenPaths['nid_front'] = $request->file('nid_front_image')->store('verification/nid_front', 'public');
+                $writtenPaths['nid_back'] = $request->file('nid_back_image')->store('verification/nid_back', 'public');
+                $writtenPaths['passport'] = $request->file('passport_photo')->store('verification/passport_photos', 'public');
 
                 $user->update([
-                    'nid_number'        => $validated['nid_number'],
-                    'full_name'         => $validated['full_name'],
-                    'date_of_birth'     => $validated['date_of_birth'],
-                    'father_name'       => $validated['father_name'],
-                    'mother_name'       => $validated['mother_name'],
+                    'nid_number' => $validated['nid_number'],
+                    'full_name' => $validated['full_name'],
+                    'date_of_birth' => $validated['date_of_birth'],
+                    'father_name' => $validated['father_name'],
+                    'mother_name' => $validated['mother_name'],
                     'permanent_address' => $validated['permanent_address'],
-                    'present_address'   => $validated['present_address'],
-                    'phone_number'      => $validated['phone_number'],
+                    'present_address' => $validated['present_address'],
+                    'phone_number' => $validated['phone_number'],
                     'verification_status' => 'pending',
-                    'nid_front_image'   => $writtenPaths['nid_front'],
-                    'nid_back_image'    => $writtenPaths['nid_back'],
-                    'passport_photo'    => $writtenPaths['passport'],
+                    'nid_front_image' => $writtenPaths['nid_front'],
+                    'nid_back_image' => $writtenPaths['nid_back'],
+                    'passport_photo' => $writtenPaths['passport'],
                     'verification_requested_at' => now(),
                 ]);
             });
         } catch (\Throwable $e) {
             Log::error('Verification submission failed', [
                 'user_id' => $user->id,
-                'error'   => $e->getMessage(),
+                'error' => $e->getMessage(),
             ]);
 
             foreach ($writtenPaths as $path) {
@@ -290,8 +322,8 @@ class VerificationController extends Controller
                 } catch (\Throwable $cleanupError) {
                     Log::warning('Failed to clean up orphaned verification file', [
                         'user_id' => $user->id,
-                        'path'    => $path,
-                        'error'   => $cleanupError->getMessage(),
+                        'path' => $path,
+                        'error' => $cleanupError->getMessage(),
                     ]);
                 }
             }
@@ -324,7 +356,7 @@ class VerificationController extends Controller
             } catch (\Throwable $e) {
                 Log::warning('Admin notification dispatch failed', [
                     'user_id' => $user->id,
-                    'error'   => $e->getMessage(),
+                    'error' => $e->getMessage(),
                 ]);
             }
         }
@@ -361,7 +393,7 @@ class VerificationController extends Controller
             return redirect()->route('admin.verification.index')->with('error', 'This user does not have a pending verification request.');
         }
 
-    $nidRecord = FakeNid::where('nid', $user->nid_number)->first();
+        $nidRecord = FakeNid::where('nid', $user->nid_number)->first();
 
         return view('admin.verification.show', compact('user', 'nidRecord'));
     }
@@ -379,17 +411,17 @@ class VerificationController extends Controller
     {
         $allowed = [
             'nid_front_image' => 'NID Front',
-            'nid_back_image'  => 'NID Back',
-            'passport_photo'  => 'Passport Photo',
+            'nid_back_image' => 'NID Back',
+            'passport_photo' => 'Passport Photo',
         ];
 
-        if (!array_key_exists($field, $allowed)) {
+        if (! array_key_exists($field, $allowed)) {
             abort(404);
         }
 
         $path = $user->{$field};
 
-        if (empty($path) || !Storage::disk('public')->exists($path)) {
+        if (empty($path) || ! Storage::disk('public')->exists($path)) {
             abort(404, 'Document not found.');
         }
 
@@ -439,7 +471,7 @@ class VerificationController extends Controller
                 ->lockForUpdate()
                 ->first();
 
-            if (!$locked) {
+            if (! $locked) {
                 return ['ok' => false, 'reason' => 'This request is no longer pending.'];
             }
 
@@ -450,17 +482,19 @@ class VerificationController extends Controller
              * fake_nids table. Create a row so future submissions cannot
              * re-use this NID.
              */
-            if (!$nid) {
+            if (! $nid) {
                 $nid = FakeNid::create([
-                    'nid'               => $user->nid_number,
-                    'name'              => $user->full_name ?: ($user->name ?: 'Unknown'),
-                    'father_name'       => $user->father_name ?: 'Unknown',
-                    'mother_name'       => $user->mother_name ?: 'Unknown',
-                    'date_of_birth'     => $user->date_of_birth ?: now()->subYears(20)->toDateString(),
+                    'nid' => $user->nid_number,
+                    'name' => $user->full_name ?: ($user->name ?: 'Unknown'),
+                    'father_name' => $user->father_name ?: 'Unknown',
+                    'mother_name' => $user->mother_name ?: 'Unknown',
+                    // `gender` is a NOT NULL enum on the registry table.
+                    'gender' => $user->gender ?: 'Other',
+                    'date_of_birth' => $user->date_of_birth ?: now()->subYears(20)->toDateString(),
                     'permanent_address' => $user->permanent_address ?: 'Unknown',
-                    'present_address'   => $user->present_address ?: ($user->permanent_address ?: 'Unknown'),
-                    'is_blocked'        => false,
-                    'is_verified'       => false,
+                    'present_address' => $user->present_address ?: ($user->permanent_address ?: 'Unknown'),
+                    'is_blocked' => false,
+                    'is_verified' => false,
                 ]);
             }
 
@@ -485,14 +519,23 @@ class VerificationController extends Controller
 
             $user->update([
                 'verification_status' => 'verified',
-                'verified_at'         => now(),
-                'verified_by'         => Auth::id(),
+                'verified_at' => now(),
+                'verified_by' => Auth::id(),
             ]);
+
+            /*
+             * Issue the digitally verifiable certificate. The record is
+             * persisted so it has a real lifecycle — it can be looked
+             * up by number, verified by a third party, and revoked —
+             * rather than being re-derived from the user's row on every
+             * download.
+             */
+            Certificate::issueFor($user->fresh(), Auth::id());
 
             return ['ok' => true];
         });
 
-        if (!$result['ok']) {
+        if (! $result['ok']) {
             return redirect()->route('admin.verification.index')->with('error', $result['reason']);
         }
 
@@ -505,7 +548,7 @@ class VerificationController extends Controller
     public function reject(Request $request, User $user)
     {
         $request->validate([
-            'rejection_reason' => 'required|string|max:500'
+            'rejection_reason' => 'required|string|max:500',
         ]);
 
         if ($user->verification_status !== 'pending') {
@@ -523,7 +566,7 @@ class VerificationController extends Controller
                 ->lockForUpdate()
                 ->first();
 
-            if (!$locked) {
+            if (! $locked) {
                 return;
             }
 
@@ -535,12 +578,12 @@ class VerificationController extends Controller
 
             $locked->update([
                 'verification_status' => 'rejected',
-                'rejection_reason'    => $request->rejection_reason,
-                'rejected_at'         => now(),
-                'rejected_by'         => Auth::id(),
-                'nid_front_image'     => null,
-                'nid_back_image'      => null,
-                'passport_photo'      => null,
+                'rejection_reason' => $request->rejection_reason,
+                'rejected_at' => now(),
+                'rejected_by' => Auth::id(),
+                'nid_front_image' => null,
+                'nid_back_image' => null,
+                'passport_photo' => null,
                 /*
                  * Reset verification_requested_at so the citizen's create()
                  * guard ("already pending + requested_at") does not keep
@@ -561,8 +604,8 @@ class VerificationController extends Controller
                 } catch (\Throwable $e) {
                     Log::warning('Failed to delete rejected verification image', [
                         'user_id' => $user->id,
-                        'path'    => $path,
-                        'error'   => $e->getMessage(),
+                        'path' => $path,
+                        'error' => $e->getMessage(),
                     ]);
                 }
             }
@@ -582,30 +625,99 @@ class VerificationController extends Controller
             return redirect()->back()->with('error', 'Certificate is available only after verification.');
         }
 
-        $certificateNumber = sprintf('VCN-%06d', $user->id);
-        $issuedDate = optional($user->verified_at)->format('F d, Y') ?? now()->format('F d, Y');
-        $qrUrl = URL::temporarySignedRoute('verification.status', now()->addYears(5), ['user' => $user->id]);
+        /*
+         * Fetch the persisted certificate. It is issued when the admin
+         * approves the application; if it is missing for any reason we
+         * issue one now rather than showing an empty document.
+         */
+        $certificate = Certificate::where('user_id', $user->id)
+            ->where('status', Certificate::STATUS_VALID)
+            ->latest('issued_at')
+            ->first();
 
-        $qrImage = null;
-        $qrResponse = Http::timeout(10)->get('https://api.qrserver.com/v1/create-qr-code/', [
-            'size' => '320x320',
-            'data' => $qrUrl,
-            'margin' => 0,
+        if (! $certificate) {
+            $certificate = Certificate::issueFor($user, $user->verified_by);
+        }
+
+        $certificateNumber = $certificate->certificate_number;
+        $issuedDate = optional($certificate->issued_at)->format('F d, Y') ?? now()->format('F d, Y');
+
+        /*
+         * The QR points at the public verification page for this
+         * certificate number, so a third party can confirm authenticity
+         * without needing to know the holder's identity.
+         */
+        $qrUrl = URL::temporarySignedRoute('verification.certificate.verify', now()->addYears(5), [
+            'certificate' => $certificate->certificate_number,
         ]);
 
-        if ($qrResponse->successful()) {
-            $qrImage = 'data:image/png;base64,' . base64_encode($qrResponse->body());
-        }
+        $qrImage = $this->buildQrImage($qrUrl);
 
         $pdf = Pdf::loadView('verification.certificate', [
             'user' => $user,
+            'certificate' => $certificate,
             'certificateNumber' => $certificateNumber,
             'issuedDate' => $issuedDate,
             'qrImage' => $qrImage,
             'qrFallbackUrl' => $qrUrl,
         ])->setPaper('a4', 'portrait');
 
-        return $pdf->download('verification-certificate-' . $user->id . '.pdf');
+        return $pdf->download('verification-certificate-'.$certificateNumber.'.pdf');
+    }
+
+    /**
+     * Build the QR image for the certificate.
+     *
+     * The QR code is a convenience, not the security control — the
+     * signed URL it encodes is what a verifier checks. So if the
+     * third-party QR service is unreachable (or the server has no
+     * outbound network access, as in CI) we fall back to printing the
+     * verification URL as text rather than failing the whole download.
+     */
+    private function buildQrImage(string $url): ?string
+    {
+        try {
+            $response = Http::timeout(10)->get('https://api.qrserver.com/v1/create-qr-code/', [
+                'size' => '320x320',
+                'data' => $url,
+                'margin' => 0,
+            ]);
+        } catch (\Throwable $exception) {
+            Log::warning('QR generation service unreachable.', ['error' => $exception->getMessage()]);
+
+            return null;
+        }
+
+        if (! $response->successful()) {
+            return null;
+        }
+
+        return 'data:image/png;base64,'.base64_encode($response->body());
+    }
+
+    /**
+     * Public verification endpoint — anyone holding a certificate number
+     * (or scanning the QR on the certificate) can confirm that it is
+     * genuine and currently valid, without seeing the holder's full
+     * identity record.
+     */
+    public function verifyCertificate(Request $request, string $certificate)
+    {
+        $record = Certificate::where('certificate_number', $certificate)->first();
+
+        if (! $record) {
+            return view('verification.certificate-status', [
+                'certificate' => null,
+                'found' => false,
+                'valid' => false,
+            ]);
+        }
+
+        return view('verification.certificate-status', [
+            'certificate' => $record,
+            'found' => true,
+            'valid' => $record->isValid(),
+        ]);
     }
 
     /**
@@ -616,11 +728,11 @@ class VerificationController extends Controller
         $status = match ($user->verification_status) {
             'verified' => 'verified',
             'rejected' => 'rejected',
-            default    => 'pending',
+            default => 'pending',
         };
 
         return view('verification.status', [
-            'user'   => $user,
+            'user' => $user,
             'status' => $status,
         ]);
     }

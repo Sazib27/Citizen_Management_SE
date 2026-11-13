@@ -13,6 +13,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             PropertySeeder::class,
             TaxAssessmentSeeder::class,
+            RentAgreementDemoSeeder::class,
         ]);
     }
 }

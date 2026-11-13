@@ -11,9 +11,7 @@ class TaxAssessmentOverdue extends Notification
 {
     use Queueable;
 
-    public function __construct(private readonly TaxAssessment $assessment)
-    {
-    }
+    public function __construct(private readonly TaxAssessment $assessment) {}
 
     public function via(object $notifiable): array
     {
@@ -26,9 +24,9 @@ class TaxAssessmentOverdue extends Notification
 
         return (new MailMessage)
             ->subject('Tax assessment overdue reminder')
-            ->line('Your tax assessment for property: ' . ($this->assessment->property?->title ?? 'N/A') . ' is now overdue.')
-            ->line('Outstanding amount: BDT ' . number_format($outstanding, 2))
-            ->line('Due date: ' . optional($this->assessment->due_date)->format('M d, Y'))
+            ->line('Your tax assessment for property: '.($this->assessment->property?->title ?? 'N/A').' is now overdue.')
+            ->line('Outstanding amount: BDT '.number_format($outstanding, 2))
+            ->line('Due date: '.optional($this->assessment->due_date)->format('M d, Y'))
             ->line('Please settle the amount to avoid penalties.')
             ->action('Review assessment', route('citizen.taxes.index'));
     }

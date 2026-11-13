@@ -11,23 +11,22 @@ use Illuminate\Support\Carbon;
 
 class AdminTaxController extends Controller
 {
-    public function __construct(private readonly TaxAssessmentService $assessmentService)
-    {
-    }
+    public function __construct(private readonly TaxAssessmentService $assessmentService) {}
 
     public function index(Request $request)
     {
         $filters = $request->only(['status', 'fiscal_year', 'q']);
 
         $assessments = TaxAssessment::with(['property.owner'])
-            ->when($request->filled('status'), fn($query) => $query->where('status', $request->status))
-            ->when($request->filled('fiscal_year'), fn($query) => $query->where('fiscal_year', $request->fiscal_year))
+            ->when($request->filled('status'), fn ($query) => $query->where('status', $request->status))
+            ->when($request->filled('fiscal_year'), fn ($query) => $query->where('fiscal_year', $request->fiscal_year))
             ->when($request->filled('q'), function ($query) use ($request) {
                 $query->where(function ($subQuery) use ($request) {
                     $subQuery->whereHas('property', function ($sub) use ($request) {
-                        $sub->where('title', 'like', '%' . $request->q . '%')
-                            ->orWhere('city', 'like', '%' . $request->q . '%');
-                    })->orWhereHas('owner', fn($sub) => $sub->where('display_name', 'like', '%' . $request->q . '%'));
+                        $sub->where('title', 'like', '%'.$request->q.'%')
+                            ->orWhere('city', 'like', '%'.$request->q.'%');
+                    })->orWhereHas('owner', fn ($sub) => $sub->where('full_name', 'like', '%'.$request->q.'%')
+                        ->orWhere('name', 'like', '%'.$request->q.'%'));
                 });
             })
             ->latest('fiscal_year')
@@ -77,8 +76,8 @@ class AdminTaxController extends Controller
         }
 
         $assessment = $this->assessmentService->generate($property, $data['fiscal_year'], $data['assessed_value'] ?? null);
-        if (!empty($data['note'])) {
-            $assessment->notes = trim($assessment->notes . PHP_EOL . $data['note']);
+        if (! empty($data['note'])) {
+            $assessment->notes = trim($assessment->notes.PHP_EOL.$data['note']);
             $assessment->save();
         }
 

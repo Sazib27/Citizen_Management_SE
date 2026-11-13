@@ -34,11 +34,15 @@
             </div>
         @endif
 
-        @unless($stripeEnabled)
+        @if($sslczEnabled && config('services.sslcommerz.demo_mode'))
+            <div class="bg-yellow-50 border-l-4 border-yellow-500 text-yellow-800 p-3 text-sm">
+                <strong>DEMO MODE</strong> — payments are simulated locally. No real money will be charged and no external payment gateway will be contacted.
+            </div>
+        @elseif(!$sslczEnabled)
             <div class="bg-yellow-50 border-l-4 border-yellow-500 text-yellow-800 p-3 text-sm">
                 Online card payments are temporarily unavailable. Please contact support or visit the ward office to pay.
             </div>
-        @endunless
+        @endif
 
         <form method="GET" class="flex flex-col md:flex-row gap-4">
             <select name="status" class="border rounded p-2 md:w-48">
@@ -84,9 +88,9 @@
                             </td>
                             <td class="px-6 py-4 text-sm text-gray-600">{{ $assessment->due_date ? $assessment->due_date->format('M d, Y') : '—' }}</td>
                             <td class="px-6 py-4 text-sm">
-                                @if(in_array($assessment->status, ['issued', 'overdue']) && $stripeEnabled)
+                                @if(in_array($assessment->status, ['issued', 'overdue']) && $sslczEnabled)
                                     <a href="{{ route('citizen.taxes.pay.show', $assessment) }}" class="inline-flex items-center bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-xs font-semibold">
-                                        Pay with Stripe
+                                        Pay Online
                                     </a>
                                 @elseif($assessment->status === 'paid')
                                     <span class="text-green-700 font-semibold text-xs">Paid</span>

@@ -14,15 +14,18 @@ class TaxPayment extends Model
         'payer_id',
         'recorded_by',
         'amount',
+        'currency',
         'method',
         'reference',
         'paid_at',
         'notes',
+        'gateway_response',
     ];
 
     protected $casts = [
         'amount' => 'decimal:2',
         'paid_at' => 'datetime',
+        'gateway_response' => 'array',
     ];
 
     public function assessment()

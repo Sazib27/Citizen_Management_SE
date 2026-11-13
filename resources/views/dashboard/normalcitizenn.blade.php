@@ -13,12 +13,20 @@
     $verificationStatusLabel = $isVerified
         ? 'verified'
         : ($isRejected ? 'rejected' : ($hasPendingRequest ? 'pending review' : 'not started'));
-    $activeRentAgreements = \App\Models\RentAgreement::with(['property.owner'])
-        ->where('tenant_id', $currentUser->id)
-        ->where('status', 'active')
-        ->whereDate('end_date', '>=', now())
+    $userRentAgreements = \App\Models\RentAgreement::with(['property.owner'])
+        ->where(function ($query) use ($currentUser) {
+            $query->where('tenant_id', $currentUser->id)
+                ->orWhere('landlord_id', $currentUser->id);
+        })
         ->orderBy('end_date')
         ->get();
+
+    $activeRentAgreements = $userRentAgreements
+        ->where('status', 'active')
+        ->filter(fn ($agreement) => optional($agreement->end_date)->gte(now()->startOfDay()));
+
+    $expiredRentAgreements = $userRentAgreements
+        ->reject(fn ($agreement) => $activeRentAgreements->contains($agreement));
 @endphp
 <div class="space-y-6">
     @if(session('status'))
@@ -105,6 +113,28 @@
                         <p class="text-sm text-gray-600 mt-2">BDT {{ number_format($agreement->monthly_rent, 2) }} / month</p>
                         <p class="text-xs text-gray-500">{{ optional($agreement->start_date)->format('M d, Y') }} - {{ optional($agreement->end_date)->format('M d, Y') }}</p>
                         <a href="{{ route('citizen.rent-agreements.show', $agreement) }}" class="inline-flex items-center text-xs text-green-700 font-semibold mt-3">View agreement →</a>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    @endif
+
+    @if($expiredRentAgreements->isNotEmpty())
+        <div class="bg-white shadow rounded-lg p-6">
+            <h2 class="text-lg font-semibold text-gray-900 mb-4">Past Rentals</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                @foreach($expiredRentAgreements as $agreement)
+                    <div class="border border-gray-100 rounded-lg p-4 opacity-75">
+                        <div class="flex items-center justify-between">
+                            <p class="text-sm font-semibold text-gray-900">{{ $agreement->property->title ?? 'Property removed' }}</p>
+                            <span class="px-2 py-1 text-xs font-semibold rounded-full bg-gray-200 text-gray-700">
+                                {{ ucfirst($agreement->status) }} · Ended
+                            </span>
+                        </div>
+                        <p class="text-xs text-gray-500">Owner: {{ optional($agreement->property?->owner)->display_name ?? 'Municipality' }}</p>
+                        <p class="text-sm text-gray-600 mt-2">BDT {{ number_format($agreement->monthly_rent, 2) }} / month</p>
+                        <p class="text-xs text-gray-500">{{ optional($agreement->start_date)->format('M d, Y') }} - {{ optional($agreement->end_date)->format('M d, Y') }}</p>
+                        <a href="{{ route('citizen.rent-agreements.show', $agreement) }}" class="inline-flex items-center text-xs text-gray-600 font-semibold mt-3">View agreement →</a>
                     </div>
                 @endforeach
             </div>

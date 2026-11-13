@@ -12,15 +12,13 @@ use Stripe\Exception\ApiErrorException;
 
 class StripeTaxPaymentController extends Controller
 {
-    public function __construct(private readonly StripeCheckoutService $stripe)
-    {
-    }
+    public function __construct(private readonly StripeCheckoutService $stripe) {}
 
     public function create(Request $request, TaxAssessment $taxAssessment): RedirectResponse
     {
         $this->authorizeAssessment($request->user(), $taxAssessment);
 
-        if (!in_array($taxAssessment->status, ['issued', 'overdue'])) {
+        if (! in_array($taxAssessment->status, ['issued', 'overdue'])) {
             return redirect()->route('citizen.taxes.index')->withErrors([
                 'payment' => 'This assessment is not eligible for online payment.',
             ]);
@@ -51,7 +49,7 @@ class StripeTaxPaymentController extends Controller
             $stripeMessage = $exception->getMessage() ?: 'Unknown Stripe error.';
 
             return redirect()->route('citizen.taxes.index')->withErrors([
-                'payment' => 'Stripe rejected the payment request: ' . $stripeMessage,
+                'payment' => 'Stripe rejected the payment request: '.$stripeMessage,
             ]);
         } catch (\Throwable $exception) {
             report($exception);
@@ -67,7 +65,7 @@ class StripeTaxPaymentController extends Controller
     public function success(Request $request): RedirectResponse
     {
         $sessionId = $request->query('session_id');
-        if (!$sessionId) {
+        if (! $sessionId) {
             return redirect()->route('citizen.taxes.index')->withErrors([
                 'payment' => 'Missing payment session. Please try again.',
             ]);
@@ -90,7 +88,7 @@ class StripeTaxPaymentController extends Controller
         }
 
         $assessmentId = $session->metadata->assessment_id ?? null;
-        if (!$assessmentId) {
+        if (! $assessmentId) {
             return redirect()->route('citizen.taxes.index')->withErrors([
                 'payment' => 'Payment succeeded but we could not find the linked assessment. Please contact support with your receipt.',
             ]);
@@ -128,7 +126,7 @@ class StripeTaxPaymentController extends Controller
 
     private function authorizeAssessment($user, TaxAssessment $taxAssessment): void
     {
-        if (!$user || $taxAssessment->owner_id !== $user->id) {
+        if (! $user || $taxAssessment->owner_id !== $user->id) {
             abort(403);
         }
     }

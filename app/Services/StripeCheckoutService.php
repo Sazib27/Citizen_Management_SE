@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Models\TaxAssessment;
 use App\Models\User;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\URL;
 use Stripe\Checkout\Session;
 use Stripe\StripeClient;
@@ -14,8 +13,7 @@ class StripeCheckoutService
     public function __construct(
         private readonly StripeClient $client,
         private readonly ?string $currency = null,
-    ) {
-    }
+    ) {}
 
     public function createPaymentSession(TaxAssessment $assessment, User $user): Session
     {
@@ -61,7 +59,7 @@ class StripeCheckoutService
 
         $relativePath = route('citizen.taxes.payment.success', [], false);
 
-        return URL::to($relativePath) . '?session_id={CHECKOUT_SESSION_ID}';
+        return URL::to($relativePath).'?session_id={CHECKOUT_SESSION_ID}';
     }
 
     private function resolveCancelUrl(): string
@@ -94,12 +92,13 @@ class StripeCheckoutService
 
         $candidate = strtolower(trim((string) ($this->currency ?: '')));
 
-        if ($candidate === '' || !in_array($candidate, $supported, true)) {
+        if ($candidate === '' || ! in_array($candidate, $supported, true)) {
             if ($candidate !== '' && $candidate !== 'usd') {
                 \Log::warning('Stripe does not support configured currency; falling back to USD.', [
                     'configured' => $candidate,
                 ]);
             }
+
             return 'usd';
         }
 

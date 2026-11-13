@@ -25,12 +25,22 @@ class PropertyController extends Controller
         $properties = Property::query()
             ->active()
             ->when($request->filled('q'), function ($query) use ($request) {
-                $query->where(function ($subQuery) use ($request) {
-                    $subQuery->where('title', 'like', '%' . $request->q . '%')
-                        ->orWhere('city', 'like', '%' . $request->q . '%');
+                $term = '%'.$request->q.'%';
+
+                $query->where(function ($subQuery) use ($term) {
+                    $subQuery->where('title', 'like', $term)
+                        ->orWhere('city', 'like', $term)
+                        ->orWhere('address_line', 'like', $term)
+                        ->orWhere('state', 'like', $term)
+                        ->orWhere('postal_code', 'like', $term)
+                        // Search by the owner's name as well, so a
+                        // citizen can find a property by who owns it.
+                        ->orWhereHas('owner', fn ($ownerQuery) => $ownerQuery->where('full_name', 'like', $term)
+                            ->orWhere('name', 'like', $term));
                 });
             })
-            ->when($request->boolean('rent_only'), fn($query) => $query->where('is_available_for_rent', true))
+            ->when($request->filled('type'), fn ($query) => $query->where('type', $request->type))
+            ->when($request->boolean('rent_only'), fn ($query) => $query->where('is_available_for_rent', true))
             ->latest()
             ->paginate(10)
             ->withQueryString();
@@ -238,6 +248,28 @@ class PropertyController extends Controller
         ]);
 
         return back()->with('status', 'Rental request sent to property owner.');
+    }
+
+    /**
+     * Owner-facing queue of rental requests for the properties they own.
+     *
+     * This lives outside the `verified.citizen` middleware group on
+     * purpose. A property owner whose citizen verification is pending or
+     * rejected is redirected away from every property route, which left
+     * them with no way to confirm a request at all — and an unconfirmed
+     * request could not reach the admin either.
+     */
+    public function ownerRentalRequests()
+    {
+        $ownedPropertyIds = Property::where('owner_id', Auth::id())->pluck('id');
+
+        $requests = RentalRequest::with(['property', 'user'])
+            ->whereIn('property_id', $ownedPropertyIds)
+            ->where('status', 'pending')
+            ->latest()
+            ->get();
+
+        return view('citizen.properties.owner-requests', compact('requests'));
     }
 
     public function confirmRentalRequest(Request $request, RentalRequest $rentalRequest)

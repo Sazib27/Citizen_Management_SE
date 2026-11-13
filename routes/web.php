@@ -14,7 +14,7 @@ use App\Http\Controllers\AdminRevenueController;
 use App\Http\Controllers\AdminTaxController;
 use App\Http\Controllers\CitizenRentAgreementController;
 use App\Http\Controllers\CitizenTaxController;
-use App\Http\Controllers\StripeTaxPaymentController;
+use App\Http\Controllers\SSLCommerzTaxPaymentController;
 use App\Http\Controllers\ComplaintController;
 use App\Http\Controllers\AdminComplaintController;
 
@@ -70,13 +70,17 @@ Route::get('/register', [
 Route::post('/register', [
     AuthController::class,
     'register'
-])->name('register.post');
+])
+    ->name('register.post')
+    ->middleware('throttle:register');
 
 
 Route::post('/login', [
     AuthController::class,
     'login'
-])->name('login.post');
+])
+    ->name('login.post')
+    ->middleware('throttle:login');
 
 
 Route::post('/logout', [
@@ -319,9 +323,15 @@ Route::middleware([
          *
          * IMPORTANT:
          * This remains unchanged.
+         *
+         * `verified.email` is layered on top so that a citizen who
+         * registered but never confirmed their address cannot reach the
+         * high-value service routes by posting to them directly. The
+         * dashboard, profile and verification routes stay outside this
+         * group so the citizen can still complete the verification.
          */
 
-        Route::middleware('verified.citizen')->group(function () {
+        Route::middleware(['verified.email', 'verified.citizen'])->group(function () {
 
 
             /*
@@ -400,15 +410,6 @@ Route::middleware([
             )->name('properties.rental-request');
 
 
-            Route::post(
-                '/rental-requests/{rentalRequest}/owner-confirm',
-                [
-                    PropertyController::class,
-                    'confirmRentalRequest'
-                ]
-            )->name('rental-requests.owner-confirm');
-
-
             Route::get(
                 '/properties/{property}',
                 [
@@ -440,6 +441,24 @@ Route::middleware([
             )->name('rent-agreements.show');
 
 
+            Route::get(
+                '/rent-agreements/{rentAgreement}/download',
+                [
+                    CitizenRentAgreementController::class,
+                    'download'
+                ]
+            )->name('rent-agreements.download');
+
+
+            Route::get(
+                '/rent-agreements-lookup',
+                [
+                    CitizenRentAgreementController::class,
+                    'lookup'
+                ]
+            )->name('rent-agreements.lookup');
+
+
             /*
              * Taxes.
              */
@@ -465,19 +484,52 @@ Route::middleware([
             Route::post(
                 '/taxes/{taxAssessment}/pay',
                 [
-                    StripeTaxPaymentController::class,
+                    SSLCommerzTaxPaymentController::class,
                     'create'
                 ]
             )->name('taxes.pay');
 
 
+            /*
+             * SSL Commerz return URLs. `success` and `ipn` are both
+             * needed — success is the customer-facing redirect, ipn is
+             * the server-to-server authoritative confirmation.
+             */
             Route::get(
                 '/taxes/payment/success',
                 [
-                    StripeTaxPaymentController::class,
+                    SSLCommerzTaxPaymentController::class,
                     'success'
                 ]
             )->name('taxes.payment.success');
+
+            Route::get(
+                '/taxes/payment/fail',
+                [
+                    SSLCommerzTaxPaymentController::class,
+                    'fail'
+                ]
+            )->name('taxes.payment.fail');
+
+            Route::get(
+                '/taxes/payment/cancel',
+                [
+                    SSLCommerzTaxPaymentController::class,
+                    'cancel'
+                ]
+            )->name('taxes.payment.cancel');
+
+            /*
+             * Demo-only confirmation endpoint. Returns 404 in
+             * production — the controller checks the demo flag.
+             */
+            Route::get(
+                '/taxes/payment/demo',
+                [
+                    SSLCommerzTaxPaymentController::class,
+                    'demoConfirm'
+                ]
+            )->name('taxes.payment.demo');
 
 
             Route::get(
@@ -528,9 +580,83 @@ Route::middleware([
                 ]
             )->name('complaints.show');
 
+
+            Route::post(
+                '/complaints/{complaint}/rating',
+                [
+                    ComplaintController::class,
+                    'rate'
+                ]
+            )->name('complaints.rate');
+
         });
 
+
+        /*
+         * Owner rental-request queue.
+         *
+         * Deliberately placed OUTSIDE the `verified.citizen` group above.
+         *
+         * A property owner whose citizen verification is pending or
+         * rejected is redirected away from every property route, so they
+         * could never open their own property page to confirm a rental
+         * request. With the confirmation unreachable, the request could
+         * never be forwarded to the admin either, and the admin had no
+         * way to complete the workflow.
+         *
+         * The owner only needs to be able to *read* the request and
+         * confirm terms on their own property, so this stays behind
+         * `auth` + `citizen` only.
+         */
+
+        Route::get(
+            '/property-rental-requests',
+            [
+                PropertyController::class,
+                'ownerRentalRequests'
+            ]
+        )->name('properties.owner-rental-requests');
+
+
+        Route::post(
+            '/rental-requests/{rentalRequest}/owner-confirm',
+            [
+                PropertyController::class,
+                'confirmRentalRequest'
+            ]
+        )->name('rental-requests.owner-confirm');
+
     });
+
+
+/*
+|--------------------------------------------------------------------------
+| SSL Commerz Server-to-Server Callbacks
+|--------------------------------------------------------------------------
+|
+| The IPN endpoint is called by SSL Commerz's servers, not by a browser.
+| It therefore sits OUTSIDE the `auth` / `citizen` middleware groups —
+| a gateway POST carries no session cookie and would otherwise be
+| rejected before reaching the controller.
+|
+| Because the endpoint is unauthenticated, it must be protected by
+| something else. Two independent layers are applied:
+|
+|   1. A shared-secret header check (SSLCZ lets you configure a custom
+|      header value; we compare it against SSLCZ_IPN_SECRET).
+|   2. Server-side reconciliation against the gateway's Validation API
+|      inside the controller, which confirms amount, currency and
+|      transaction id before any payment row is written.
+|
+*/
+
+Route::any(
+    '/citizen/taxes/payment/ipn',
+    [
+        SSLCommerzTaxPaymentController::class,
+        'ipn'
+    ]
+)->name('citizen.taxes.payment.ipn');
 
 
 /*
@@ -762,6 +888,15 @@ Route::middleware(['auth'])->group(function () {
             )->name('rent-agreements.show');
 
 
+            Route::get(
+                '/rent-agreements/{rentAgreement}/download',
+                [
+                    AdminRentAgreementController::class,
+                    'download'
+                ]
+            )->name('rent-agreements.download');
+
+
             /*
              * Admin taxes.
              */
@@ -888,9 +1023,26 @@ Route::middleware(['auth'])->group(function () {
 
 /*
 |--------------------------------------------------------------------------
-| Public Verification Status Endpoint
+| Public Verification Endpoints
 |--------------------------------------------------------------------------
+|
+| `verification.certificate.verify` is the endpoint the QR code on the
+| issued certificate points at. It is signed (so the URL cannot be
+| forged) but otherwise public — a third party holding the certificate
+| must be able to check it without an account.
+|
 */
+
+Route::get(
+    '/verification/certificate/{certificate}',
+    [
+        VerificationController::class,
+        'verifyCertificate'
+    ]
+)
+    ->name('verification.certificate.verify')
+    ->middleware('signed');
+
 
 Route::get(
     '/verification/status/{user}',

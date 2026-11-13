@@ -6,8 +6,8 @@ use App\Models\Property;
 use App\Models\TaxAssessment;
 use App\Models\TaxPayment;
 use App\Models\User;
-use Illuminate\Support\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Carbon;
 use Tests\TestCase;
 
 class AdminRevenueDashboardTest extends TestCase

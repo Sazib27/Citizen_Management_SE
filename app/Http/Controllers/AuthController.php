@@ -30,18 +30,18 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
-    'email' => [
-        'required',
-        'string',
-        'email',
-        'max:255',
-        'unique:users,email',
-        'regex:/^[a-zA-Z0-9._%+-]+@gmail\.com$/',
-    ],
-    'password' => 'required|string|min:8|confirmed',
-], [
-    'email.regex' => 'Please use a valid Gmail address (must end with @gmail.com).',
-]);
+            'email' => [
+                'required',
+                'string',
+                'email',
+                'max:255',
+                'unique:users,email',
+                'regex:/^[a-zA-Z0-9._%+-]+@gmail\.com$/',
+            ],
+            'password' => 'required|string|min:8|confirmed',
+        ], [
+            'email.regex' => 'Please use a valid Gmail address (must end with @gmail.com).',
+        ]);
 
         if ($validator->fails()) {
             return back()
@@ -93,7 +93,6 @@ class AuthController extends Controller
             );
     }
 
-
     /*
     |--------------------------------------------------------------------------
     | Login
@@ -123,7 +122,7 @@ class AuthController extends Controller
             'password' => $request->password,
         ];
 
-        if (!Auth::attempt(
+        if (! Auth::attempt(
             $credentials,
             $request->boolean('remember')
         )) {
@@ -158,7 +157,7 @@ class AuthController extends Controller
 
         if (
             $user->isCitizen() &&
-            !$user->hasVerifiedEmail()
+            ! $user->hasVerifiedEmail()
         ) {
             return redirect()
                 ->route('verification.notice')
@@ -179,7 +178,6 @@ class AuthController extends Controller
         );
     }
 
-
     /*
     |--------------------------------------------------------------------------
     | Logout
@@ -196,7 +194,6 @@ class AuthController extends Controller
 
         return redirect()->route('login');
     }
-
 
     /*
     |--------------------------------------------------------------------------
@@ -219,7 +216,6 @@ class AuthController extends Controller
             ->whereNull('used_at')
             ->delete();
 
-
         /*
         |--------------------------------------------------------------------------
         | Generate 6 Digit OTP
@@ -230,7 +226,6 @@ class AuthController extends Controller
             100000,
             999999
         );
-
 
         /*
         |--------------------------------------------------------------------------
@@ -244,7 +239,6 @@ class AuthController extends Controller
             'expires_at' => now()->addMinutes(10),
             'attempts' => 0,
         ]);
-
 
         /*
         |--------------------------------------------------------------------------
@@ -263,7 +257,6 @@ class AuthController extends Controller
             ]
         );
 
-
         /*
         |--------------------------------------------------------------------------
         | Send Email
@@ -279,7 +272,6 @@ class AuthController extends Controller
         );
     }
 
-
     /**
      * Resend verification email and OTP.
      */
@@ -287,7 +279,7 @@ class AuthController extends Controller
     {
         $user = Auth::user();
 
-        if (!$user) {
+        if (! $user) {
             return redirect()->route('login');
         }
 
@@ -320,7 +312,6 @@ class AuthController extends Controller
         );
     }
 
-
     /**
      * Verify email using OTP.
      */
@@ -341,14 +332,13 @@ class AuthController extends Controller
         |--------------------------------------------------------------------------
         */
 
-        if (!$user) {
+        if (! $user) {
             return redirect()
                 ->route('login')
                 ->withErrors([
                     'email' => 'Please login first.',
                 ]);
         }
-
 
         /*
         |--------------------------------------------------------------------------
@@ -365,7 +355,6 @@ class AuthController extends Controller
                 );
         }
 
-
         /*
         |--------------------------------------------------------------------------
         | Get Latest Active OTP
@@ -380,14 +369,11 @@ class AuthController extends Controller
             ->latest('created_at')
             ->first();
 
-
-        if (!$verificationOtp) {
+        if (! $verificationOtp) {
             return back()->withErrors([
-                'otp' =>
-                    'No active OTP was found. Please request a new verification code.',
+                'otp' => 'No active OTP was found. Please request a new verification code.',
             ]);
         }
-
 
         /*
         |--------------------------------------------------------------------------
@@ -397,11 +383,9 @@ class AuthController extends Controller
 
         if ($verificationOtp->expires_at->isPast()) {
             return back()->withErrors([
-                'otp' =>
-                    'This OTP has expired. Please request a new verification code.',
+                'otp' => 'This OTP has expired. Please request a new verification code.',
             ]);
         }
-
 
         /*
         |--------------------------------------------------------------------------
@@ -411,11 +395,9 @@ class AuthController extends Controller
 
         if ($verificationOtp->attempts >= 5) {
             return back()->withErrors([
-                'otp' =>
-                    'Too many incorrect attempts. Please request a new OTP.',
+                'otp' => 'Too many incorrect attempts. Please request a new OTP.',
             ]);
         }
-
 
         /*
         |--------------------------------------------------------------------------
@@ -423,7 +405,7 @@ class AuthController extends Controller
         |--------------------------------------------------------------------------
         */
 
-        if (!Hash::check(
+        if (! Hash::check(
             $request->otp,
             $verificationOtp->otp_hash
         )) {
@@ -435,7 +417,6 @@ class AuthController extends Controller
             ]);
         }
 
-
         /*
         |--------------------------------------------------------------------------
         | OTP Correct
@@ -446,17 +427,15 @@ class AuthController extends Controller
             'used_at' => now(),
         ]);
 
-
         /*
         |--------------------------------------------------------------------------
         | Mark Email As Verified
         |--------------------------------------------------------------------------
         */
 
-        if (!$user->hasVerifiedEmail()) {
+        if (! $user->hasVerifiedEmail()) {
             $user->markEmailAsVerified();
         }
-
 
         /*
         |--------------------------------------------------------------------------
@@ -476,7 +455,6 @@ class AuthController extends Controller
             )
             ->delete();
 
-
         /*
         |--------------------------------------------------------------------------
         | Redirect
@@ -491,7 +469,6 @@ class AuthController extends Controller
             );
     }
 
-
     /*
     |--------------------------------------------------------------------------
     | PASSWORD RESET
@@ -505,7 +482,6 @@ class AuthController extends Controller
     {
         return view('auth.forgot-password');
     }
-
 
     /**
      * Send password reset email.
@@ -539,7 +515,6 @@ class AuthController extends Controller
             ]);
     }
 
-
     /**
      * Show Reset Password page.
      */
@@ -553,7 +528,6 @@ class AuthController extends Controller
             ]
         );
     }
-
 
     /**
      * Reset password.
@@ -578,7 +552,6 @@ class AuthController extends Controller
             ],
         ]);
 
-
         $status = Password::reset(
             $request->only(
                 'email',
@@ -599,7 +572,6 @@ class AuthController extends Controller
             }
         );
 
-
         if ($status === Password::PASSWORD_RESET) {
             return redirect()
                 ->route('login')
@@ -608,7 +580,6 @@ class AuthController extends Controller
                     'Your password has been reset successfully. You can now log in.'
                 );
         }
-
 
         return back()
             ->withInput(

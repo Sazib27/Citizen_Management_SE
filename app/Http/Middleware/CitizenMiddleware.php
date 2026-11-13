@@ -16,11 +16,11 @@ class CitizenMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!Auth::check()) {
+        if (! Auth::check()) {
             return redirect()->route('login');
         }
 
-        if (!Auth::user()->isCitizen()) {
+        if (! Auth::user()->isCitizen()) {
             return redirect()->route('admin.dashboard')->with('error', 'Access denied. Citizen privileges required.');
         }
 

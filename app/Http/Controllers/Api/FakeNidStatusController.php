@@ -13,7 +13,7 @@ class FakeNidStatusController extends Controller
      */
     public function show(string $nidNumber): JsonResponse
     {
-        if (!preg_match('/^\d{10}$/', $nidNumber)) {
+        if (! preg_match('/^\d{10}$/', $nidNumber)) {
             return response()->json([
                 'nid_number' => $nidNumber,
                 'status' => 'invalid_format',

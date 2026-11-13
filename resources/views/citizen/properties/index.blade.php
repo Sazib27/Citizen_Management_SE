@@ -19,6 +19,7 @@
                 <p class="text-sm text-gray-500">Track approved properties, pending rental requests, and request data updates.</p>
             </div>
             <div class="flex gap-3">
+                <a href="{{ route('citizen.properties.owner-rental-requests') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-semibold rounded-md shadow hover:bg-blue-700">Rental Requests on My Properties</a>
                 <a href="{{ route('citizen.properties.request.add') }}" class="inline-flex items-center px-4 py-2 bg-green-600 text-white text-sm font-semibold rounded-md shadow hover:bg-green-700">Request New Property</a>
             </div>
         </div>

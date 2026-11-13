@@ -61,11 +61,11 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function getDisplayNameAttribute(): string
     {
-        if (!empty($this->full_name)) {
+        if (! empty($this->full_name)) {
             return $this->full_name;
         }
 
-        if (!empty($this->name)) {
+        if (! empty($this->name)) {
             return $this->name;
         }
 

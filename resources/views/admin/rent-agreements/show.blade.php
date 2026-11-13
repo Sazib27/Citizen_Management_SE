@@ -57,6 +57,11 @@
         </div>
     </div>
 
-    <a href="{{ route('admin.rent-agreements.index') }}" class="inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-600 bg-white border border-gray-200 rounded shadow-sm hover:bg-gray-50">Back to list</a>
+    <div class="flex flex-wrap items-center gap-3">
+        <a href="{{ route('admin.rent-agreements.download', $rentAgreement) }}" class="inline-flex items-center px-4 py-2 text-sm font-semibold text-white bg-indigo-600 rounded shadow-sm hover:bg-indigo-700">
+            Download PDF
+        </a>
+        <a href="{{ route('admin.rent-agreements.index') }}" class="inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-600 bg-white border border-gray-200 rounded shadow-sm hover:bg-gray-50">Back to list</a>
+    </div>
 </div>
 @endsection
